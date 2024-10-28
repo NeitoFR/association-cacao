@@ -1,11 +1,12 @@
 services:
-  node:
-    image: node:20
-    working_dir: /app
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./strapi:/app
     ports:
-      - "3000:3000"
-    stdin_open: true
-    tty: true
-    command: sleep infinity
+      - "3000:1337"
+    environment:
+      NODE_ENV: production
+    command: ["sleep", "infinity"]
