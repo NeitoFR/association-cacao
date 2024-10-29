@@ -1,0 +1,33 @@
+services:
+  front:
+    container_name: front
+    hostname: front
+    build:
+      context: ..
+      dockerfile: ./front/docker/Dockerfile.dev
+    ports:
+      - "5173:5173" # Map Vite's development port
+    volumes:
+      - ../front:/app # Mount the project directory to the container's /app folder
+    environment:
+      - NODE_ENV=development
+    # command: sleep infinity
+    stdin_open: true # Enable interaction
+    tty: true # Enable TTY
+
+  backend:
+    container_name: backend
+    hostname: backend
+    build:
+      context: ..
+      dockerfile: ./backend/docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../backend:/app # Mount the project directory to the container's /app folder
+      - "/Users/willemhoum/devspace/markdown-files:/data"
+    environment:
+      - NODE_ENV=development
+    # command: sleep infinity
+    stdin_open: true # Enable interaction
+    tty: true # Enable TTY

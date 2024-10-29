@@ -1,0 +1,63 @@
+# nameOverride replace the name of the chart
+nameOverride:
+# fullnameOverride
+fullnameOverride:
+
+### Deployments configuration
+deployments:
+  app:
+    labels:
+    annotations:
+    replicas:
+    terminationGracePeriodSeconds:
+    containers:
+      strapi:
+        resources:
+        imagePullPolicy:
+
+# imagesConfiguration allow to configure container image URLs for the console.
+# Since all 3 images used by the console are shipped synchronously.
+imagesConfiguration:
+  global:
+    repo:
+    tag: latest
+  custom:
+    strapi:
+      repo:
+      tag:
+
+### Ingress configuration
+### Will automatically bind the hosts to the service
+ingress:
+  enabled: yes
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  tls:
+    - secretName: strapi-tls
+      hosts:
+        - strapi.neitosden.fr
+  hosts:
+    - host: strapi.neitosden.fr
+      paths:
+        - path: /
+          pathType: Prefix
+
+# globalLabels will be applied to all deployments and jobs
+globalLabels:
+# globalAnnotations will be applied to all deployments and jobs
+globalAnnotations:
+
+# managedImagePullSecret, pass a base64 encoded version of a
+# .dockerconfigjson and it will be created by helm and applied
+# to all resources
+managedImagePullSecret:
+
+# imagePullSecrets is an object array of imagePullSecrets that will
+# be added to all resources.
+# exemple value: - name: name-of-secret
+imagePullSecrets:
+  - name: regcred
+
+service:
+  port: 1337
