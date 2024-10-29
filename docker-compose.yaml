@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - ./strapi:/app
+    # volumes:
+    #   - ./strapi:/app
     ports:
       - "3000:1337"
     environment:

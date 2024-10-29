@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:20-alpine
+FROM node:20-alpine AS build
 
 # Set the working directory
 WORKDIR /app
@@ -10,14 +10,24 @@ COPY ./strapi/package.json ./strapi/package-lock.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
-COPY ./strapi/ .
+# # Copy the rest of the application code
+COPY ./strapi/ ./
 
 # Build the Strapi application
 RUN npm run build
 
-# Expose the port that the Strapi application will run on
 EXPOSE 1337
 
-# Start the Strapi application
 CMD ["npm", "start"]
+
+# FROM node:20-alpine AS prod
+
+# WORKDIR /app
+
+# COPY --from=build /app/package.json /app/package-lock.json /app/dist ./
+
+# RUN npm ci --production
+
+# EXPOSE 1337
+
+# CMD ["npm", "start"]
