@@ -3,31 +3,24 @@ services:
     container_name: front
     hostname: front
     build:
-      context: ..
-      dockerfile: ./front/docker/Dockerfile.dev
-    ports:
-      - "5173:5173" # Map Vite's development port
+      context: ../front
+      dockerfile: docker/Dockerfile.dev
     volumes:
-      - ../front:/app # Mount the project directory to the container's /app folder
-    environment:
-      - NODE_ENV=development
-    # command: sleep infinity
-    stdin_open: true # Enable interaction
-    tty: true # Enable TTY
+      - ../front/app:/app
+    ports:
+      - "4321:4321"
+    stdin_open: true
+    tty: true
 
-  backend:
-    container_name: backend
-    hostname: backend
-    build:
-      context: ..
-      dockerfile: ./backend/docker/Dockerfile.dev
-    ports:
-      - "3000:3000"
-    volumes:
-      - ../backend:/app # Mount the project directory to the container's /app folder
-      - "/Users/willemhoum/devspace/markdown-files:/data"
-    environment:
-      - NODE_ENV=development
-    # command: sleep infinity
-    stdin_open: true # Enable interaction
-    tty: true # Enable TTY
+  # strapi:
+  #   container_name: strapi
+  #   hostname: strapi
+  #   build:
+  #     context: ../strapi
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - ./strapi:/app
+  #   ports:
+  #     - "1337:1337"
+  #   stdin_open: true
+  #   tty: true
