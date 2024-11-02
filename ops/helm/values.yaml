@@ -32,10 +32,10 @@ imagesConfiguration:
     tag: latest
   custom:
     strapi:
-      repo:
+      repo: ghcr.io/neitofr/association-cacao/strapi
       tag:
     front:
-      repo:
+      repo: ghcr.io/neitofr/association-cacao/front
       tag:
 
 ### Ingress configuration

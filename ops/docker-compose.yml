@@ -4,23 +4,23 @@ services:
     hostname: front
     build:
       context: ../front
-      dockerfile: docker/Dockerfile.dev
+      dockerfile: ./docker/Dockerfile.dev
     volumes:
-      - ../front/app:/app
+      - ../front:/app
     ports:
       - "4321:4321"
     stdin_open: true
     tty: true
 
-  # strapi:
-  #   container_name: strapi
-  #   hostname: strapi
-  #   build:
-  #     context: ../strapi
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./strapi:/app
-  #   ports:
-  #     - "1337:1337"
-  #   stdin_open: true
-  #   tty: true
+  strapi:
+    container_name: strapi
+    hostname: strapi
+    build:
+      context: ../strapi
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ../strapi:/app
+    ports:
+      - "1337:1337"
+    stdin_open: true
+    tty: true

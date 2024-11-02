@@ -79,7 +79,7 @@ imagePullSecrets:
 {{- /*** Image URL Section ***/ -}}
 {{- /* cacao.globalImage.repo */}}
 {{ define "cacao.globalImage.repo" -}}
-{{ default "ghcr.io/neitofr/cacao-strapi" .Values.imagesConfiguration.global.repo }}
+{{ default "ghcr.io/neitofr/association-cacao" .Values.imagesConfiguration.global.repo }}
 {{- end -}}
 
 {{- /* cacao.globalImage.tag */}}

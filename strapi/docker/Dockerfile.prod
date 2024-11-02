@@ -10,33 +10,9 @@ COPY ./strapi/package*.json ./
 RUN npm install
 
 # # Copy the rest of the application code
-COPY ./strapi/src /app/src
-COPY ./strapi/public /app/public
-COPY ./strapi/vite.config.js ./strapi/eslint.config.js ./strapi/index.html /app/
+COPY ./strapi/ /app
 
-
-# Build the React app
+# # Build the React app
 RUN npm run build
 
-# # Stage 2: Serve the React app with Nginx
-FROM nginx:alpine3.20-perl
-
-# Remove the default configuration file
-RUN rm /etc/nginx/conf.d/default.conf
-COPY ./ /app
-
-# # Copy custom Nginx configuration file if you have one
-COPY ./front/nginx/nginx.conf /etc/nginx/nginx.conf
-# # Copy nginx configuration files
-COPY ./front/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./front/nginx/conf.d/front.conf /etc/nginx/conf.d/front.conf
-
-# # Copy the build output to the Nginx html directory
-COPY --from=build /app/dist /var/www/front
-
-
-# Expose port 80
-EXPOSE 80
-
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
