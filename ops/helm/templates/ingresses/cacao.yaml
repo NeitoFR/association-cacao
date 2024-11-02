@@ -1,5 +1,4 @@
 {{- if .Values.ingress.enabled -}}
-{{- $svcPort := .Values.service.port -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
@@ -51,12 +50,10 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: "{{ include "cacao.fullname" $ }}-strapi"
+                name: "{{ include "cacao.fullname" $ }}-{{ .serviceName }}"
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ .servicePort }}
               {{- else }}
-              serviceName: "{{ include "cacao.fullname" $ }}-strapi"
-              servicePort: {{ $svcPort }}
               {{- end }}
           {{- end }}
     {{- end }}

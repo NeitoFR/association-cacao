@@ -5,7 +5,16 @@ fullnameOverride:
 
 ### Deployments configuration
 deployments:
-  app:
+  front:
+    labels:
+    annotations:
+    replicas:
+    terminationGracePeriodSeconds:
+    containers:
+      front:
+        resources:
+        imagePullPolicy:
+  strapi:
     labels:
     annotations:
     replicas:
@@ -25,6 +34,9 @@ imagesConfiguration:
     strapi:
       repo:
       tag:
+    front:
+      repo:
+      tag:
 
 ### Ingress configuration
 ### Will automatically bind the hosts to the service
@@ -37,11 +49,21 @@ ingress:
     - secretName: strapi-tls
       hosts:
         - strapi.neitosden.fr
+        - cacao.neitosden.fr
   hosts:
     - host: strapi.neitosden.fr
       paths:
         - path: /
           pathType: Prefix
+          serviceName: strapi
+          servicePort: 1137
+    - host: cacao.neitosden.fr
+      serviceName: front
+      paths:
+        - path: /
+          pathType: Prefix
+          serviceName: front
+          servicePort: 80
 
 # globalLabels will be applied to all deployments and jobs
 globalLabels:
@@ -59,5 +81,9 @@ managedImagePullSecret:
 imagePullSecrets:
   - name: regcred
 
-service:
-  port: 1337
+services:
+  ## Ports are the one exposed by the service
+  strapi:
+    port: 1337
+  front:
+    port: 80

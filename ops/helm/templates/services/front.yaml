@@ -1,4 +1,4 @@
-{{- $name := "strapi" -}}
+{{- $name := "front" -}}
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,9 +10,9 @@ metadata:
 spec:
   ports:
   - name: {{ $name }}
-    port: {{ default 1337 .Values.services.strapi.port }}
+    port: {{ default 80 .Values.services.front.port }}
     protocol: TCP
-    targetPort: 1337
+    targetPort: 80
   selector:
     {{- (include "cacao.selectorLabels" .) | nindent 4 }}
     app.kubernetes.io/name: {{ $name }}

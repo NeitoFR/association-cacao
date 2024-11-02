@@ -1,0 +1,54 @@
+{{- $name := "front" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cacao.fullname" . }}-{{ $name }}
+  namespace: {{ template "cacao.namespace" . }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    {{- if .Values.deployments.front.labels }}
+    {{- toYaml .Values.deployments.front.labels | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- (include "cacao.globalAnnotations" . ) | nindent 4 }}
+    {{- if .Values.deployments.front.annotations }}
+    {{- toYaml .Values.deployments.front.annotations | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ default 1 .Values.deployments.front.replicas }}
+  selector:
+    matchLabels:
+      {{ include "cacao.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ $name }}
+        {{- (include "cacao.commonLabels" .) | nindent 8 }}
+        {{- if .Values.deployments.front.labels }}
+        {{- toYaml .Values.deployments.front.labels | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- (include "cacao.globalAnnotations" . ) | nindent 8 }}
+        {{- if .Values.deployments.front.annotations }}
+        {{- toYaml .Values.deployments.front.annotations | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: {{ $name }}
+          image: {{ include "cacao.frontImage.url" . }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.deployments.front.containers.front.imagePullPolicy }}
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          {{- if .Values.deployments.front.containers.front.resources }}
+          {{- with .Values.deployments.front.containers.front.resources }}
+          resources:
+          {{- toYaml . | nindent 12 }}
+          {{- end -}}
+          {{- else }}
+          {{- end -}}
+      {{- (include "cacao.imagePullSecrets" .) | nindent 6 }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: {{ default 30 .Values.deployments.front.terminationGracePeriodSeconds }}

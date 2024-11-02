@@ -106,3 +106,18 @@ imagePullSecrets:
 {{ define "cacao.strapiImage.url" -}}
 {{ printf "%s:%s" (include "cacao.strapiImage.repo" .) (include "cacao.strapiImage.tag" .) }}
 {{- end -}}
+
+{{- /* cacao.frontImage.repo */}}
+{{ define "cacao.frontImage.repo" -}}
+{{ default (include "cacao.globalImage.repo" .) .Values.imagesConfiguration.custom.front.repo }}
+{{- end -}}
+
+{{- /* cacao.frontImage.tag */}}
+{{ define "cacao.frontImage.tag" -}}
+{{ default (include "cacao.globalImage.tag" .) .Values.imagesConfiguration.custom.front.tag }}
+{{- end -}}
+
+{{- /* cacao.frontImage.url */}}
+{{ define "cacao.frontImage.url" -}}
+{{ printf "%s:%s" (include "cacao.frontImage.repo" .) (include "cacao.frontImage.tag" .) }}
+{{- end -}}
