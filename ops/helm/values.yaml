@@ -23,6 +23,27 @@ deployments:
       strapi:
         resources:
         imagePullPolicy:
+    config:
+      # HOST default is 0.0.0.0
+      HOST: 
+      # PORT default is 1337
+      PORT: 
+      APP_KEYS: 
+      API_TOKEN_SALT: 
+      ADMIN_JWT_SECRET: 
+      TRANSFER_TOKEN_SALT: 
+      # DATABASE_CLIENT default is postgres
+      DATABASE_CLIENT: 
+      DATABASE_HOST: 
+      DATABASE_PORT: 
+      # DATABASE_NAME default is cacao
+      DATABASE_NAME: 
+      # DATABASE_USERNAME default is cacao
+      DATABASE_USERNAME: 
+      DATABASE_PASSWORD: 
+      # DATABASE_SSL default is false
+      DATABASE_SSL: 
+      JWT_SECRET: 
 
 # imagesConfiguration allow to configure container image URLs for the console.
 # Since all 3 images used by the console are shipped synchronously.
