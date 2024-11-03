@@ -1,2 +1,18 @@
-<nav>
+---
+import NavbarLink from "./NavbarLink.astro";
+import fetchApi from "../lib/strapi";
+import type Tab from "../interfaces/tab";
+
+const tabs: Tab[] = await fetchApi<Tab[]>({
+  endpoint: "tabs", // the content type to fetch
+  wrappedByKey: "data", // the key to unwrap the response
+});
+---
+
+<nav class="w-full bg-white h-24 flex justify-center items-center">
+  {
+    tabs.map((tab) => {
+      return <NavbarLink href={tab.href} name={tab.name} />;
+    })
+  }
 </nav>

@@ -11,16 +11,3 @@ services:
       - "4321:4321"
     stdin_open: true
     tty: true
-
-  strapi:
-    container_name: strapi
-    hostname: strapi
-    build:
-      context: ../strapi
-      dockerfile: ./docker/Dockerfile.dev
-    volumes:
-      - ../strapi:/app
-    ports:
-      - "1337:1337"
-    stdin_open: true
-    tty: true
