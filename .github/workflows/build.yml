@@ -100,7 +100,7 @@ jobs:
           git config --global user.name "GitHub Actions"
 
           # Create a new tag for the current commit
-          git tag ${{ env.VERSION }}
+          git tag $VERSION
 
           # Push the tag back to the repository
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} $VERSION

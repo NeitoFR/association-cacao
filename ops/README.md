@@ -1,20 +1,20 @@
+# deploy CD job
+
 name: CD
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+workflow_run:
+workflows: ["CI"]
+types: - completed
 
 jobs:
-  deploy:
-    runs-on: self-hosted # Run this job on your self-hosted runner
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Ensure full git history is fetched, including tags
+deploy:
+runs-on: self-hosted # Run this job on your self-hosted runner
+if: ${{ github.event.workflow_run.conclusion == 'success' }}
+steps: - name: Checkout code
+uses: actions/checkout@v4
+with:
+fetch-depth: 0 # Ensure full git history is fetched, including tags
 
       - name: Set GitHub user
         run: |
@@ -38,8 +38,8 @@ jobs:
           echo "Deploying version $TAG"
 
           # Perform Helm upgrade (or install if it doesn't exist)
-          helm upgrade --install betterpi ./ops/helm \
-            --namespace neitosden-react \
+          helm upgrade --install cacao ./ops/helm \
+            --namespace cacao --create-namespace \
             --set imagesConfiguration.global.tag="$TAG" \
             --set deployments.strapi.config.APP_KEYS="$APP_KEYS" \
             --set deployments.strapi.config.API_TOKEN_SALT="$API_TOKEN_SALT" \
