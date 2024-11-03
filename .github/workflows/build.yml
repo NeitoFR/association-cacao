@@ -50,11 +50,11 @@ jobs:
           echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
           # Build and tag Docker image with the new version
-          docker build -f ./ops/front/Dockerfile.prod . --tag ghcr.io/${{ github.repository }}/front:${{ env.VERSION }}
-          docker push ghcr.io/${{ github.repository }}/front:${{ env.VERSION }}
+          docker build -f ./ops/front/Dockerfile.prod . --tag ghcr.io/${{ github.repository }}/front:$VERSION
+          docker push ghcr.io/${{ github.repository }}/front:$VERSION
 
           # Optionally, tag it as 'latest' for development environments
-          docker tag ghcr.io/${{ github.repository }}/front:${{ env.VERSION }} ghcr.io/${{ github.repository }}/front:latest
+          docker tag ghcr.io/${{ github.repository }}/front:$VERSION ghcr.io/${{ github.repository }}/front:latest
           docker push ghcr.io/${{ github.repository }}/front:latest
 
           docker logout ghcr.io
@@ -74,17 +74,20 @@ jobs:
 
           # Build and tag Docker image with the new version
           docker build -f ./ops/strapi/Dockerfile.prod . --tag ghcr.io/${{ github.repository }}/strapi:$VERSION
-          docker push ghcr.io/${{ github.repository }}/strapi:${{ env.VERSION }}
+          docker push ghcr.io/${{ github.repository }}/strapi:$VERSION
 
           # Optionally, tag it as 'latest' for development environments
-          docker tag ghcr.io/${{ github.repository }}/strapi:${{ env.VERSION }} ghcr.io/${{ github.repository }}/strapi:latest
+          docker tag ghcr.io/${{ github.repository }}/strapi:$VERSION ghcr.io/${{ github.repository }}/strapi:latest
           docker push ghcr.io/${{ github.repository }}/strapi:latest
 
           docker logout ghcr.io
 
   create-release:
     runs-on: self-hosted
-    needs: ["front-build", "strapi-build"]
+    # Added prepare-builds as a dependency to ensure the new version is available
+    needs: ["front-build", "strapi-build", "prepare-builds"]
+    env:
+      VERSION: ${{ needs.prepare-builds.outputs.new-version }}
     steps:
       - name: Tag the repository with the version
         run: |
@@ -95,4 +98,4 @@ jobs:
           git tag ${{ env.VERSION }}
 
           # Push the tag back to the repository
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} ${{ env.VERSION }}
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} $VERSION
