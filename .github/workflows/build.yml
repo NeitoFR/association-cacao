@@ -38,9 +38,11 @@ jobs:
   test:
     runs-on: self-hosted
     needs: prepare-builds
+    env:
+      VERSION: ${{ needs.prepare-builds.outputs.new-version }}
     steps:
       - name: Echo new version
-        run: echo "The new version is ${{ needs.prepare-builds.outputs.new-version }}"
+        run: echo "The new version is $VERSION"
   # front-build:
   #   runs-on: self-hosted
   #   needs: prepare-builds
