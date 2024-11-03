@@ -9,13 +9,14 @@ on:
 jobs:
   prepare-builds:
     runs-on: self-hosted
-
+    outputs:
+      new-version: ${{ steps.set-version.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up date-based versioning with increment
-        id: version
+        id: set-version
         run: |
           # Get the current date in YYYY-MM-DD format
           CURRENT_DATE=$(date +"%Y-%m-%d")
@@ -33,7 +34,7 @@ jobs:
 
           # Create the new version tag in the format YYYY-MM-DD-vX
           VERSION="${CURRENT_DATE}-v${NEW_VERSION}"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "new-version=$VERSION" >> $GITHUB_OUTPUT
 
   front-build:
     runs-on: self-hosted
@@ -43,11 +44,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build and push Docker image
+        env:
+          VERSION: ${{ needs.prepare-builds.outputs.new-version }}
         run: |
           echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
           # Build and tag Docker image with the new version
-          docker build -f ./ops/front/Dockerfile.prod . --tag ghcr.io/${{ github.repository }}/front:$VERSION
+          docker build -f ./ops/front/Dockerfile.prod . --tag ghcr.io/${{ github.repository }}/front:${{ env.VERSION }}
           docker push ghcr.io/${{ github.repository }}/front:${{ env.VERSION }}
 
           # Optionally, tag it as 'latest' for development environments
@@ -64,6 +67,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build and push Docker image
+        env:
+          VERSION: ${{ needs.prepare-builds.outputs.new-version }}
         run: |
           echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
