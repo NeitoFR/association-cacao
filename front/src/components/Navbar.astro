@@ -2,7 +2,8 @@
 import NavbarLink from "./NavbarLink.astro";
 import fetchApi from "../lib/strapi";
 import type Tab from "../interfaces/tab";
-
+import ThemeSlider from "./ThemeSlider.astro"
+        
 const tabs: Tab[] = await fetchApi<Tab[]>({
   endpoint: "tabs", // the content type to fetch
   wrappedByKey: "data", // the key to unwrap the response
@@ -15,4 +16,5 @@ const tabs: Tab[] = await fetchApi<Tab[]>({
       return <NavbarLink href={tab.href} name={tab.name} />;
     })
   }
+  <ThemeSlider />
 </nav>
