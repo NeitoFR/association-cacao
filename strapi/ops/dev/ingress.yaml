@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cacao
+  namespace: cacao-dev
+  labels:
+    app.kubernetes.io/instance: cacao-dev
+    app.kubernetes.io/name: strapi
+    app.kubernetes.io/part-of: cacao
+    app.kubernetes.io/version: 2024-11-03-v1
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - dev.strapi.neitosden.fr
+      secretName: dev-cacao-tls
+  rules:
+    - host: dev.strapi.neitosden.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cacao-strapi
+                port:
+                  number: 1137

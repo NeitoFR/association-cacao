@@ -3,14 +3,11 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY ./strapi/package*.json ./
+# # Copy the rest of the application code
+COPY ./strapi/ /app
 
 # # Install dependencies
 RUN npm install
-
-# # Copy the rest of the application code
-COPY ./strapi/ /app
 
 # # Build the React app
 RUN npm run build

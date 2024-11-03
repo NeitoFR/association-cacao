@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi
+  namespace: cacao-dev
+  labels:
+    app.kubernetes.io/instance: cacao-dev
+    app.kubernetes.io/name: strapi
+    app.kubernetes.io/part-of: cacao
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: cacao-dev
+      app.kubernetes.io/name: strapi
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: cacao-dev
+        app.kubernetes.io/name: strapi
+        app.kubernetes.io/part-of: cacao
+    spec:
+      containers:
+        - name: strapi
+          image: ghcr.io/neitofr/association-cacao/strapi:2024-11-03-v1
+          envFrom:
+            - secretRef:
+                name: strapi-dev-config
+          ports:
+            - containerPort: 1337
+
+          command: ["npm", "start"]
