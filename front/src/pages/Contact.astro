@@ -1,1 +1,43 @@
-Contact
+---
+
+---
+
+<div class="rounded-full bg-amber-400 p-2 w-fit m-auto relative">
+  <img
+    class="w-6 h-6"
+    src={`${import.meta.env.STRAPI_URL}/uploads/120px_Instagram_simple_icon_svg_ee2c9cb312_b29096e7af.png`}
+    alt="Instagram icon"
+    id="icon"
+  />
+  <div
+    id="tooltip"
+    class="absolute left-1/2 transform -translate-x-1/2 bg-gray-400 px-2 pb-0.5 rounded mt-1.5 text-xs"
+  >
+    Follow us on instagram
+  </div>
+</div>
+
+<style>
+  #tooltip {
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+  }
+
+  #tooltip:before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent #9ca3af transparent;
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+  }
+
+  #icon:hover + #tooltip,
+  #icon:hover + #tooltip:before {
+    opacity: 1;
+  }
+</style>
