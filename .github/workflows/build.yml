@@ -10,7 +10,7 @@ jobs:
   prepare-builds:
     runs-on: self-hosted
     outputs:
-      new-version: ${{ steps.set-version.outputs.version }}
+      version: ${{ steps.set-version.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,12 +34,14 @@ jobs:
 
           # Create the new version tag in the format YYYY-MM-DD-vX
           VERSION="${CURRENT_DATE}-v${NEW_VERSION}"
-          echo "new-version=$VERSION" >> $GITHUB_OUTPUT
+          echo "The new version is $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "::set-output name=version::$VERSION"
   test:
     runs-on: self-hosted
     needs: prepare-builds
     env:
-      VERSION: ${{ needs.prepare-builds.outputs.new-version }}
+      VERSION: ${{ needs.prepare-builds.outputs.version }}
     steps:
       - name: Echo new version
         run: echo "The new version is $VERSION"
