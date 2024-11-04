@@ -27,7 +27,7 @@ export default async function fetchApi<T>({
 
   // Add headers
   const headers = new Headers();
-  headers.append("Authorization", `${import.meta.env.STRAPI_API_TOKEN}`);
+  headers.append("Authorization", `Bearer ${import.meta.env.STRAPI_API_TOKEN}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
