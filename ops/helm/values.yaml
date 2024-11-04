@@ -77,7 +77,7 @@ ingress:
         - path: /
           pathType: Prefix
           serviceName: strapi
-          servicePort: 1137
+          servicePort: 1337
     - host: cacao.neitosden.fr
       serviceName: front
       paths:
