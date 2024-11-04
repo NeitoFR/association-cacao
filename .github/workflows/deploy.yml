@@ -33,7 +33,7 @@ jobs:
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
-          # Check if the tag was correctly fetched
+          # Fetch last tag
           TAG=$(git describe --tags --abbrev=0)
           echo "Deploying version $TAG"
 
