@@ -54,7 +54,10 @@ jobs:
           echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
           # Build and tag Docker image with the new version
-          docker build -f ./front/docker/Dockerfile.prod . --tag ghcr.io/$REPO_NAME/front:$VERSION
+          docker build -f ./front/docker/Dockerfile.prod . \
+            --build-arg STRAPI_URL=$STRAPI_URL \
+            --build-arg STRAPI_API_TOKEN=$STRAPI_API_TOKEN \
+            --tag ghcr.io/$REPO_NAME/front:$VERSION
           docker push ghcr.io/$REPO_NAME/front:$VERSION
 
           # Optionally, tag it as 'latest' for development environments
