@@ -1,0 +1,28 @@
+{{- $name := "db-backup" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cacao.fullname" . }}-{{ $name }}-script
+  namespace: {{ include "cacao.namespace" . }}
+  labels:
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+data:
+  backup.sh: |
+    #!/bin/bash
+    set -e
+
+    echo "Starting database backup..."
+
+    # Define variables
+    TIMESTAMP=$(date +"%F")
+    BACKUP_DIR="/$TIMESTAMP"
+
+    # Create backup directory if it doesn't exist
+    mkdir -p $BACKUP_DIR
+
+    
+    # Perform the database backup
+    pg_dump -U $DB_USER -h $DB_HOST $DB_PASSWORD > $BACKUP_DIR/$BACKUP_FILE
+
+    echo "Database backup completed: $BACKUP_FILE"
