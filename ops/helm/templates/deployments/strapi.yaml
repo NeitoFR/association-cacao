@@ -39,6 +39,9 @@ spec:
         - name: strapi
           image: {{ include "cacao.strapiImage.url" . }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.deployments.strapi.containers.strapi.imagePullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "cacao.fullname" . }}-{{ $name }}-config
           ports:
             - containerPort: 1337
               protocol: TCP

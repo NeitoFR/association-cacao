@@ -39,6 +39,9 @@ spec:
         - name: {{ $name }}
           image: {{ include "cacao.frontImage.url" . }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.deployments.front.containers.front.imagePullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "cacao.fullname" . }}-{{ $name }}-config
           ports:
             - containerPort: 80
               protocol: TCP
