@@ -36,17 +36,17 @@ deployments:
       API_TOKEN_SALT: 
       ADMIN_JWT_SECRET: 
       TRANSFER_TOKEN_SALT: 
-      # DATABASE_CLIENT default is postgres
-      DATABASE_CLIENT:
-      DATABASE_HOST: 
-      DATABASE_PORT: 
-      # DATABASE_NAME default is cacao
-      DATABASE_NAME: 
-      # DATABASE_USERNAME default is cacao
-      DATABASE_USERNAME: 
-      DATABASE_PASSWORD: 
-      # DATABASE_SSL default is false
-      DATABASE_SSL:
+      # DB_CLIENT default is postgres
+      DB_CLIENT:
+      DB_HOST: 
+      DB_PORT: 
+      # DB_NAME default is cacao
+      DB_NAME: 
+      # DB_USERNAME default is cacao
+      DB_USERNAME: 
+      DB_PASSWORD: 
+      # DB_SSL default is false
+      DB_SSL:
       JWT_SECRET: 
 
 # imagesConfiguration allow to configure container image URLs for the console.
