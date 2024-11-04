@@ -48,6 +48,6 @@ jobs:
             --set deployments.strapi.config.DATABASE_HOST="$DATABASE_HOST" \
             --set deployments.strapi.config.DATABASE_PORT="$DATABASE_PORT" \
             --set deployments.strapi.config.DATABASE_PASSWORD="$DATABASE_PASSWORD" \
-            --set deployments.strapi.config.JWT_SECRET="$JWT_SECRET"
-            --set deployments.front.config.STRAPI_URL="$STRAPI_URL"
+            --set deployments.strapi.config.JWT_SECRET="$JWT_SECRET" \
+            --set deployments.front.config.STRAPI_URL="$STRAPI_URL" \
             --set deployments.front.config.STRAPI_API_TOKEN="$STRAPI_API_TOKEN"
