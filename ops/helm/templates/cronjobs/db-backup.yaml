@@ -1,5 +1,5 @@
 {{- $name := "db-backup" -}}
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "cacao.fullname" . }}-{{ $name }}
@@ -21,18 +21,17 @@ spec:
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
-                  name: {{ include "cacao.fullname" . }}-{{ $name }}-config
-              command: ["/bin/sh", "-c"]
-              args:
-                - sleep infinity
+                    name: {{ include "cacao.fullname" . }}-{{ $name }}-config
+              command: ["sh", "/tmp/script.sh"]
               volumeMounts:
                 - name: s3cfg
                   mountPath: /root/.s3cfg
                   subPath: s3cfg
                 - name: script
-                  mountPath: /root/script.sh
+                  mountPath: /tmp/script.sh
                   subPath: backup.sh
           restartPolicy: OnFailure
+          {{- (include "cacao.imagePullSecrets" .) | nindent 10 }}
           volumes:
             - name: s3cfg
               configMap:
