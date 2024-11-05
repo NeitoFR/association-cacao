@@ -1,0 +1,57 @@
+{{- $name := "strapi" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cacao.fullname" . }}-{{ $name }}
+  namespace: {{ template "cacao.namespace" . }}
+  labels:
+    app.kubernetes.io/name: {{ $name }}
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    {{- if .Values.deployments.strapi.labels }}
+    {{- toYaml .Values.deployments.strapi.labels | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- (include "cacao.globalAnnotations" . ) | nindent 4 }}
+    {{- if .Values.deployments.strapi.annotations }}
+    {{- toYaml .Values.deployments.strapi.annotations | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ default 1 .Values.deployments.strapi.replicas }}
+  selector:
+    matchLabels:
+      {{ include "cacao.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ $name }}
+        {{- (include "cacao.commonLabels" .) | nindent 8 }}
+        {{- if .Values.deployments.strapi.labels }}
+        {{- toYaml .Values.deployments.strapi.labels | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- (include "cacao.globalAnnotations" . ) | nindent 8 }}
+        {{- if .Values.deployments.strapi.annotations }}
+        {{- toYaml .Values.deployments.strapi.annotations | nindent 8 }}
+        {{- end }}
+    spec:
+      containers:
+        - name: strapi
+          image: {{ include "cacao.strapiImage.url" . }}
+          imagePullPolicy: {{ default "IfNotPresent" .Values.deployments.strapi.containers.strapi.imagePullPolicy }}
+          envFrom:
+            - secretRef:
+                name: {{ include "cacao.fullname" . }}-{{ $name }}-config
+          ports:
+            - containerPort: 1337
+              protocol: TCP
+          {{- if .Values.deployments.strapi.containers.strapi.resources }}
+          {{- with .Values.deployments.strapi.containers.strapi.resources }}
+          resources:
+          {{- toYaml . | nindent 12 }}
+          {{- end -}}
+          {{- else }}
+          {{- end -}}
+      {{- (include "cacao.imagePullSecrets" .) | nindent 6 }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: {{ default 30 .Values.deployments.strapi.terminationGracePeriodSeconds }}

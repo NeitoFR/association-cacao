@@ -1,0 +1,13 @@
+services:
+  front:
+    container_name: front
+    hostname: front
+    build:
+      context: ../front
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ../front:/app
+    ports:
+      - "4321:4321"
+    stdin_open: true
+    tty: true

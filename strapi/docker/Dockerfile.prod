@@ -1,0 +1,15 @@
+# Stage 1: Build the React app
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# # Copy the rest of the application code
+COPY ./strapi/ /app
+
+# # Install dependencies
+RUN npm install
+
+# # Build the React app
+RUN npm run build
+
+CMD ["npm", "start"]

@@ -1,0 +1,136 @@
+# nameOverride replace the name of the chart
+nameOverride:
+# fullnameOverride
+fullnameOverride:
+
+### Deployments configuration
+deployments:
+  front:
+    labels:
+    annotations:
+    replicas:
+    terminationGracePeriodSeconds:
+    containers:
+      front:
+        resources:
+        imagePullPolicy:
+    config:
+      # STRAPI_URL default is https://strapi.neitosden.fr
+      STRAPI_URL: https://dev.strapi.neitosden.fr
+      STRAPI_API_TOKEN:
+  strapi:
+    labels:
+    annotations:
+    replicas:
+    terminationGracePeriodSeconds:
+    containers:
+      strapi:
+        resources:
+        imagePullPolicy:
+    config:
+      # HOST default is 0.0.0.0
+      HOST:
+      # PORT default is 1337
+      PORT:
+      APP_KEYS: 
+      API_TOKEN_SALT: 
+      ADMIN_JWT_SECRET: 
+      TRANSFER_TOKEN_SALT: 
+      # DB_CLIENT default is postgres
+      DB_CLIENT:
+      DB_HOST: 
+      DB_PORT: 
+      # DB_NAME default is cacao
+      DB_NAME: 
+      # DB_USERNAME default is cacao
+      DB_USERNAME: 
+      DB_PASSWORD: 
+      # DB_SSL default is false
+      DB_SSL:
+      JWT_SECRET: 
+
+# imagesConfiguration allow to configure container image URLs for the console.
+# Since all 3 images used by the console are shipped synchronously.
+imagesConfiguration:
+  global:
+    repo:
+    tag: latest
+  custom:
+    strapi:
+      repo: ghcr.io/neitofr/association-cacao/strapi
+      tag:
+    front:
+      repo: ghcr.io/neitofr/association-cacao/front
+      tag:
+
+### Ingress configuration
+### Will automatically bind the hosts to the service
+ingress:
+  enabled: yes
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  tls:
+    - secretName: strapi-tls
+      hosts:
+        - strapi.neitosden.fr
+        - cacao.neitosden.fr
+  hosts:
+    - host: strapi.neitosden.fr
+      paths:
+        - path: /
+          pathType: Prefix
+          serviceName: strapi
+          servicePort: 1337
+    - host: cacao.neitosden.fr
+      serviceName: front
+      paths:
+        - path: /
+          pathType: Prefix
+          serviceName: front
+          servicePort: 80
+
+# globalLabels will be applied to all deployments and jobs
+globalLabels:
+# globalAnnotations will be applied to all deployments and jobs
+globalAnnotations:
+
+# managedImagePullSecret, pass a base64 encoded version of a
+# .dockerconfigjson and it will be created by helm and applied
+# to all resources
+managedImagePullSecret:
+
+# imagePullSecrets is an object array of imagePullSecrets that will
+# be added to all resources.
+# exemple value: - name: name-of-secret
+imagePullSecrets:
+  - name: regcred
+
+services:
+  ## Ports are the one exposed by the service
+  strapi:
+    port: 1337
+  front:
+    port: 80
+
+# optional cronjob to backup
+# vars are all set in github repo vars/secrets
+pgbackup:
+  enabled: yes
+  # default schedule is 0 2 * * * (daily at 2AM)
+  schedule:
+  image:
+  config:
+    DB_HOST:
+    DB_PORT:
+    DB_USER:
+    DB_PASSWORD:
+    DBS_TO_BACKUP:
+    ENCRPYPTION_KEY:
+    S3_URL:
+    S3_BUCKET:
+    # S3_BUCKET_URL default is S3_URL
+    S3_BUCKET_URL:
+    S3_ACCESS_KEY:
+    S3_SECRET_KEY:
+    S3_REGION:

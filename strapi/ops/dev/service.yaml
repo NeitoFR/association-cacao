@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cacao-strapi
+  namespace: cacao-dev
+  labels:
+    app.kubernetes.io/instance: cacao-dev
+    app.kubernetes.io/name: strapi
+    app.kubernetes.io/part-of: cacao
+    app.kubernetes.io/version: 2024-11-03-v1
+spec:
+  ports:
+    - name: strapi
+      protocol: TCP
+      port: 1337
+      targetPort: 1337
+  selector:
+    app.kubernetes.io/instance: cacao-dev
+    app.kubernetes.io/name: strapi
+  type: ClusterIP
