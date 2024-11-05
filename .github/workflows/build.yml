@@ -92,7 +92,7 @@ jobs:
   create-release:
     runs-on: self-hosted
     # Added prepare-builds as a dependency to ensure the new version is available
-    needs: ["front-build", "strapi-build", "prepare-builds"]
+    needs: ["prepare-builds"]
     env:
       VERSION: ${{ needs.prepare-builds.outputs.version }}
     steps:
