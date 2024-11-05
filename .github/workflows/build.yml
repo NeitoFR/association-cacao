@@ -40,57 +40,57 @@ jobs:
           echo "The new version is $VERSION"
           echo "::set-output name=version::$VERSION"
 
-  # front-build:
-  #   runs-on: self-hosted
-  #   needs: prepare-builds
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+  front-build:
+    runs-on: self-hosted
+    needs: prepare-builds
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Build and push Docker image
-  #       env:
-  #         VERSION: ${{ needs.prepare-builds.outputs.version }}
-  #         STRAPI_URL: ${{ vars.STRAPI_URL }}
-  #         STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
-  #       run: |
-  #         REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-  #         echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Build and push Docker image
+        env:
+          VERSION: ${{ needs.prepare-builds.outputs.version }}
+          STRAPI_URL: ${{ vars.STRAPI_URL }}
+          STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
+        run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-  #         # Build and tag Docker image with the new version
-  #         docker build -f ./front/docker/Dockerfile.prod . \
-  #           --build-arg STRAPI_URL=$STRAPI_URL \
-  #           --build-arg STRAPI_API_TOKEN=$STRAPI_API_TOKEN \
-  #           --tag ghcr.io/$REPO_NAME/front:$VERSION
-  #         docker push ghcr.io/$REPO_NAME/front:$VERSION
+          # Build and tag Docker image with the new version
+          docker build -f ./front/docker/Dockerfile.prod . \
+            --build-arg STRAPI_URL=$STRAPI_URL \
+            --build-arg STRAPI_API_TOKEN=$STRAPI_API_TOKEN \
+            --tag ghcr.io/$REPO_NAME/front:$VERSION
+          docker push ghcr.io/$REPO_NAME/front:$VERSION
 
-  #         # Optionally, tag it as 'latest' for development environments
-  #         docker tag ghcr.io/$REPO_NAME/front:$VERSION ghcr.io/$REPO_NAME/front:latest
-  #         docker push ghcr.io/$REPO_NAME/front:latest
-  #         docker logout ghcr.io
+          # Optionally, tag it as 'latest' for development environments
+          docker tag ghcr.io/$REPO_NAME/front:$VERSION ghcr.io/$REPO_NAME/front:latest
+          docker push ghcr.io/$REPO_NAME/front:latest
+          docker logout ghcr.io
 
-  # strapi-build:
-  #   runs-on: self-hosted
-  #   needs: prepare-builds
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+  strapi-build:
+    runs-on: self-hosted
+    needs: prepare-builds
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Build and push Docker image
-  #       env:
-  #         VERSION: ${{ needs.prepare-builds.outputs.version }}
-  #       run: |
-  #         REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-  #         echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Build and push Docker image
+        env:
+          VERSION: ${{ needs.prepare-builds.outputs.version }}
+        run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "${{ secrets.GH_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-  #         # Build and tag Docker image with the new version
-  #         docker build -f ./strapi/docker/Dockerfile.prod . --tag ghcr.io/$REPO_NAME/strapi:$VERSION
-  #         docker push ghcr.io/$REPO_NAME/strapi:$VERSION
+          # Build and tag Docker image with the new version
+          docker build -f ./strapi/docker/Dockerfile.prod . --tag ghcr.io/$REPO_NAME/strapi:$VERSION
+          docker push ghcr.io/$REPO_NAME/strapi:$VERSION
 
-  #         # Optionally, tag it as 'latest' for development environments
-  #         docker tag ghcr.io/$REPO_NAME/strapi:$VERSION ghcr.io/$REPO_NAME/strapi:latest
-  #         docker push ghcr.io/$REPO_NAME/strapi:latest
+          # Optionally, tag it as 'latest' for development environments
+          docker tag ghcr.io/$REPO_NAME/strapi:$VERSION ghcr.io/$REPO_NAME/strapi:latest
+          docker push ghcr.io/$REPO_NAME/strapi:latest
 
-  #         docker logout ghcr.io
+          docker logout ghcr.io
 
   create-release:
     runs-on: self-hosted
