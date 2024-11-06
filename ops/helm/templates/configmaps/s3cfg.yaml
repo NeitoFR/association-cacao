@@ -1,3 +1,4 @@
+{{- if .Values.pgbackup.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -12,3 +13,4 @@ data:
     host_bucket = $S3_BUCKET_URL
     use_https = True
     region = $S3_REGION
+{{- end -}}

@@ -1,3 +1,4 @@
+{{- if .Values.pgbackup.enabled -}}
 {{- $name := "db-backup" -}}
 apiVersion: batch/v1
 kind: CronJob
@@ -39,3 +40,4 @@ spec:
             - name: script
               configMap:
                 name: {{ include "cacao.fullname" . }}-db-backup-script
+{{- end -}}
