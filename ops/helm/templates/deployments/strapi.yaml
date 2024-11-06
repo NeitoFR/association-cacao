@@ -39,6 +39,10 @@ spec:
         - name: strapi
           image: {{ include "cacao.strapiImage.url" . }}
           imagePullPolicy: {{ default "IfNotPresent" .Values.deployments.strapi.containers.strapi.imagePullPolicy }}
+          command:
+            - "npm"
+          args: 
+            - "start"
           envFrom:
             - secretRef:
                 name: {{ include "cacao.fullname" . }}-{{ $name }}-config
