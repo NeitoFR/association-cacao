@@ -66,7 +66,7 @@ jobs:
             --set pgbackup.config.DB_PORT="$DB_PORT" \
             --set pgbackup.config.DB_USER="$DB_BACKUP_USER" \
             --set pgbackup.config.DB_PASSWORD="$DB_BACKUP_USER_PASSWORD" \
-            --set pgbackup.config.DBS_TO_BACKUP="$DBS_TO_BACKUP" \
+            --set-string pgbackup.config.DBS_TO_BACKUP="$DBS_TO_BACKUP" \
             --set pgbackup.config.ENCRPYPTION_KEY="$ENCRPYPTION_KEY" \
             --set pgbackup.config.S3_URL="$S3_URL" \
             --set pgbackup.config.S3_BUCKET="$S3_BUCKET" \
