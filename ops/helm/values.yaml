@@ -32,22 +32,24 @@ deployments:
       HOST:
       # PORT default is 1337
       PORT:
-      APP_KEYS: 
-      API_TOKEN_SALT: 
-      ADMIN_JWT_SECRET: 
-      TRANSFER_TOKEN_SALT: 
+      APP_KEYS:
+      API_TOKEN_SALT:
+      ADMIN_JWT_SECRET:
+      TRANSFER_TOKEN_SALT:
       # DB_CLIENT default is postgres
       DB_CLIENT:
-      DB_HOST: 
-      DB_PORT: 
+      DB_HOST:
+      DB_PORT:
       # DB_NAME default is cacao
-      DB_NAME: 
+      DB_NAME:
       # DB_USERNAME default is cacao
-      DB_USERNAME: 
-      DB_PASSWORD: 
+      DB_USERNAME:
+      DB_PASSWORD:
       # DB_SSL default is false
       DB_SSL:
-      JWT_SECRET: 
+      JWT_SECRET:
+      # CORS_URL is a space separeted list of allowed origins
+      CORS_URL:
 
 # imagesConfiguration allow to configure container image URLs for the console.
 # Since all 3 images used by the console are shipped synchronously.
