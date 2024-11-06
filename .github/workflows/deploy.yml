@@ -1,14 +1,15 @@
 name: CD
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 jobs:
   deploy:
     runs-on: self-hosted # Run this job on your self-hosted runner
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -37,6 +38,7 @@ jobs:
                 DB_HOST: "${{ vars.DB_HOST }}"
                 DB_PORT: "${{ vars.DB_PORT }}"
                 DB_NAME: "${{ vars.DB_NAME }}"
+                DB_USER: "${{ vars.DB_USER }}"
                 DB_PASSWORD: "${{ secrets.DB_PASSWORD }}"
                 JWT_SECRET: "${{ secrets.JWT_SECRET }}"
             front:
@@ -47,7 +49,7 @@ jobs:
             config:
               DB_HOST: "${{ vars.DB_HOST }}"
               DB_PORT: "${{ vars.DB_PORT }}"
-              DB_USER: "${{ secrets.DB_BACKUP_USER }}"
+              DB_USER: "${{ vars.DB_BACKUP_USER }}"
               DB_PASSWORD: "${{ secrets.DB_BACKUP_USER_PASSWORD }}"
               DBS_TO_BACKUP: "${{ vars.DBS_TO_BACKUP }}"
               ENCRPYPTION_KEY: "${{ secrets.ENCRPYPTION_KEY }}"
