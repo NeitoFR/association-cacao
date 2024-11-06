@@ -20,13 +20,40 @@ spec:
         app.kubernetes.io/name: strapi
         app.kubernetes.io/part-of: cacao
     spec:
+      initContainers:
+        - name: init-copy
+          image: ghcr.io/neitofr/association-cacao/strapi:2024-11-03-v1
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              cp -r /app/* /mnt/app
+          volumeMounts:
+            - name: strapi-storage
+              mountPath: /mnt/app
       containers:
         - name: strapi
-          image: ghcr.io/neitofr/association-cacao/strapi:2024-11-03-v1
+          image: node:20-alpine
           envFrom:
             - secretRef:
                 name: strapi-dev-config
           ports:
             - containerPort: 1337
-
-          command: ["npm", "start"]
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              if [ "$DEV_MODE" = "RUN" ]; then
+                npm run develop;
+              else
+                sleep infinity;
+              fi
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          volumeMounts:
+            - name: strapi-storage
+              mountPath: /app
+      volumes:
+        - name: strapi-storage
+          persistentVolumeClaim:
+            claimName: strapi-dev-pvc

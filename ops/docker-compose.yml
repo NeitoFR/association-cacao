@@ -5,6 +5,8 @@ services:
     build:
       context: ../front
       dockerfile: ./docker/Dockerfile.dev
+    env_file:
+      - ../front/.env
     volumes:
       - ../front:/app
     ports:

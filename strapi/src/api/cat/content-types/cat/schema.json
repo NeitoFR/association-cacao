@@ -12,12 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string"
     },
-    "photo": {
+    "photos": {
       "type": "media",
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "allowedTypes": [
         "images",
@@ -26,8 +26,16 @@
         "audios"
       ]
     },
-    "isAdopted": {
+    "description": {
+      "type": "blocks"
+    },
+    "adopted": {
       "type": "boolean"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag"
     }
   }
 }

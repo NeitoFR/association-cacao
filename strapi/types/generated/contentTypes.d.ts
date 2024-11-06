@@ -381,16 +381,21 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    adopted: Schema.Attribute.Boolean;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    isAdopted: Schema.Attribute.Boolean;
+    description: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::cat.cat'> &
       Schema.Attribute.Private;
-    Name: Schema.Attribute.String;
-    photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    name: Schema.Attribute.String;
+    photos: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -400,6 +405,7 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
 export interface ApiTabTab extends Struct.CollectionTypeSchema {
   collectionName: 'tabs';
   info: {
+    description: '';
     displayName: 'Tabs';
     pluralName: 'tabs';
     singularName: 'tab';
@@ -417,9 +423,16 @@ export interface ApiTabTab extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     href: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
+        };
+      }>;
+    icon: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
         };
       }>;
     locale: Schema.Attribute.String;
@@ -430,6 +443,31 @@ export interface ApiTabTab extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTagTag extends Struct.CollectionTypeSchema {
+  collectionName: 'tags';
+  info: {
+    displayName: 'Tags';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -614,6 +652,10 @@ export interface PluginReviewWorkflowsWorkflow
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
+    stageRequiredToPublish: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::review-workflows.workflow-stage'
+    >;
     stages: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::review-workflows.workflow-stage'
@@ -944,6 +986,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::cat.cat': ApiCatCat;
       'api::tab.tab': ApiTabTab;
+      'api::tag.tag': ApiTagTag;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

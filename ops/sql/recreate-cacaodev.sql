@@ -1,6 +1,3 @@
-# psql script to drop and recreate DB
-
-```
 -- Connect to the PostgreSQL server
 \c postgres
 
@@ -35,7 +32,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON FUNCTIONS TO c
 
 GRANT ALL ON DATABASE cacaodev TO cacaodev;
 ALTER DATABASE cacaodev OWNER TO cacaodev;
-```
+
 
 -- Grant all privileges to the user 'backup'
 GRANT ALL PRIVILEGES ON DATABASE cacao TO backup;

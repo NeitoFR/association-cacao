@@ -1,6 +1,6 @@
 interface Props {
   endpoint: string;
-  query?: Record<string, string>;
+  query?: string;
   wrappedByKey?: string;
   wrappedByList?: boolean;
 }
@@ -13,7 +13,7 @@ interface Props {
  * @param wrappedByList - If the response is a list, unwrap it
  * @returns
  */
-export default async function fetchApi<T>({
+export default async function strapiFetch<T>({
   endpoint,
   query,
   wrappedByKey,
@@ -30,9 +30,7 @@ export default async function fetchApi<T>({
   headers.append("Authorization", `Bearer ${import.meta.env.STRAPI_API_TOKEN}`);
 
   if (query) {
-    Object.entries(query).forEach(([key, value]) => {
-      url.searchParams.append(key, value);
-    });
+    url.search = query;
   }
 
   const res = await fetch(url.toString(), {
