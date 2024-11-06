@@ -23,7 +23,7 @@ jobs:
           echo $CURRENT_DATE
           # Get the latest existing tag for the current date
           git fetch --tags
-          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          LATEST_TAG=$(git tag -l | grep $(date +"%Y-%m-%d") | sort -V | tail -n 1)
           echo "The latest tag is $LATEST_TAG"
           # Extract the current version number (X), if a tag exists
           if [ -n "$LATEST_TAG" ]; then
