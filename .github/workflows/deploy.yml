@@ -22,10 +22,11 @@ jobs:
 
       - name: Create values file
         run: |
+          TAG=$(git describe --tags --abbrev=0)
           cat <<EOF > values.yaml
           imagesConfiguration:
             global:
-              tag: "${{ needs.prepare-builds.outputs.version }}"
+              tag: "$TAG"
           deployments:
             strapi:
               config:
@@ -60,7 +61,6 @@ jobs:
       # Step to pull the latest Docker image matching the tag and deploy with Helm
       - name: Deploy to Kubernetes using Helm
         run: |
-          TAG=$(git describe --tags --abbrev=0)
           echo "Deploying version $TAG"
           helm upgrade --install cacao ./ops/helm \
             --namespace cacao --create-namespace \
