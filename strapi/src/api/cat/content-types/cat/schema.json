@@ -4,8 +4,7 @@
   "info": {
     "singularName": "cat",
     "pluralName": "cats",
-    "displayName": "Cats",
-    "description": ""
+    "displayName": "Cats"
   },
   "options": {
     "draftAndPublish": true
@@ -14,20 +13,6 @@
   "attributes": {
     "Name": {
       "type": "string"
-    },
-    "photo": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "isAdopted": {
-      "type": "boolean"
     }
   }
 }
