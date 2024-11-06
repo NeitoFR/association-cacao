@@ -34,6 +34,7 @@ jobs:
           STRAPI_URL: ${{ vars.STRAPI_URL }}
           STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
           DB_USER: ${{ vars.DB_USER }}
+          DB_NAME: ${{ vars.DB_NAME }}
           DBS_TO_BACKUP: ${{ vars.DBS_TO_BACKUP }}
           ENCRPYPTION_KEY: ${{ secrets.ENCRPYPTION_KEY }}
           S3_URL: ${{ vars.S3_URL }}
