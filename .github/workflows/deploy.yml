@@ -47,14 +47,15 @@ jobs:
             --set deployments.strapi.config.TRANSFER_TOKEN_SALT="$TRANSFER_TOKEN_SALT" \
             --set deployments.strapi.config.DB_HOST="$DB_HOST" \
             --set deployments.strapi.config.DB_PORT="$DB_PORT" \
+            --set deployments.strapi.config.DB_NAME="$DB_NAME" \
             --set deployments.strapi.config.DB_PASSWORD="$DB_PASSWORD" \
             --set deployments.strapi.config.JWT_SECRET="$JWT_SECRET" \
             --set deployments.front.config.STRAPI_URL="$STRAPI_URL" \
             --set deployments.front.config.STRAPI_API_TOKEN="$STRAPI_API_TOKEN" \
             --set pgbackup.config.DB_HOST=$DB_HOST \
             --set pgbackup.config.DB_PORT=$DB_PORT \
-            --set pgbackup.config.DB_USER=$DB_USER \
-            --set pgbackup.config.DB_PASSWORD=$DB_PASSWORD \
+            --set pgbackup.config.DB_USER=$DB_BACKUP_USER \
+            --set pgbackup.config.DB_PASSWORD=$DB_BACKUP_USER_PASSWORD \
             --set pgbackup.config.DBS_TO_BACKUP=$DBS_TO_BACKUP \
             --set pgbackup.config.ENCRPYPTION_KEY=$ENCRPYPTION_KEY \
             --set pgbackup.config.S3_URL=$S3_URL \
