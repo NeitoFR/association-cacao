@@ -36,3 +36,31 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON FUNCTIONS TO c
 GRANT ALL ON DATABASE cacaodev TO cacaodev;
 ALTER DATABASE cacaodev OWNER TO cacaodev;
 ```
+
+-- Grant all privileges to the user 'backup'
+GRANT ALL PRIVILEGES ON DATABASE cacao TO backup;
+GRANT ALL ON DATABASE cacao TO backup;
+
+-- Grant all privileges on all tables, sequences, and functions in the public schema to the user 'backup'
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO backup;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO backup;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO backup;
+
+-- Ensure future tables, sequences, and functions also get the correct privileges
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO backup;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO backup;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON FUNCTIONS TO backup;
+
+-- Grant all privileges to the user 'backup'
+GRANT ALL PRIVILEGES ON DATABASE cacaodev TO backup;
+GRANT ALL ON DATABASE cacaodev TO backup;
+
+-- Grant all privileges on all tables, sequences, and functions in the public schema to the user 'cacaodev'
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO backup;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO backup;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO backup;
+
+-- Ensure future tables, sequences, and functions also get the correct privileges
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON TABLES TO backup;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON SEQUENCES TO backup;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL PRIVILEGES ON FUNCTIONS TO backup;
