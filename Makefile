@@ -9,6 +9,11 @@ up:
 build:
 	docker-compose -f ./ops/docker-compose.yml build
 
+.PHONY: exec-front
+
+exec-front:
+	docker-compose -f ./ops/docker-compose.yml exec front sh
+
 # Used to sync the changes done on the development Strapi before committing.
 .PHONY: fetch-strapi-changes
 fetch-strapi-changes:
