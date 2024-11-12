@@ -1,0 +1,18 @@
+.previous,
+.next {
+  transition: opacity 0.2s ease-in-out;
+  user-select: none; /* Make text unselectable */
+}
+
+.previous {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+}
+
+.next {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+}
+
+.previous:hover,
+.next:hover {
+  opacity: 0.7;
+}

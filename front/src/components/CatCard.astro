@@ -1,0 +1,47 @@
+---
+import type { Cat } from "../interfaces/cat";
+import {
+  BlocksRenderer,
+  type BlocksContent,
+} from "@strapi/blocks-react-renderer";
+import CatPhotoSweeper from "./CatPhotoSweeper";
+
+interface Props {
+  cat: Cat;
+}
+
+const { cat } = Astro.props;
+console.log(cat);
+---
+
+<div
+  class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden"
+>
+  <CatPhotoSweeper
+    photos={cat.photos}
+    baseUrl={import.meta.env.STRAPI_URL}
+    client:load
+  />
+  {
+    cat.tags.length !== 0 ? (
+      <div class="h-10 m-1 flex flex-row items-center overflow-x-scroll">
+        {cat.tags.map((tag) => {
+          return (
+            <span class="bg-orange-500 text-stone-50 text-xs p-1 m-1 rounded-lg wrap">
+              {tag.name}
+            </span>
+          );
+        })}
+      </div>
+    ) : null
+  }
+
+  <div class="flex-grow bg-orange-300 pt-2 p-5 overflow-hidden overflow-y-auto">
+    <BlocksRenderer content={cat.description} />
+  </div>
+  <div class="h-12 bg-orange-400 flex flex-row items-center">
+    <div class="flex-grow text-white font-bold p-2">{cat.name}</div>
+    <img src="icons/search.svg" alt="" srcset="" class="w-6 h-6 mr-3" />
+    <img src="icons/more.svg" alt="" srcset="" class="w-6 h-6 mr-3" />
+  </div>
+</div>
