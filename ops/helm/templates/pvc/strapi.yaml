@@ -1,0 +1,15 @@
+{{- $name := "strapi" -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "cacao.fullname" . }}-{{ $name }}-uploads
+  namespace: {{ include "cacao.namespace" . }}
+  labels:
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: {{ default "20Gi" .Values.deployments.strapi.pvc.uploads.storage | toString }}
