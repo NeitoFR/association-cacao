@@ -35,6 +35,10 @@ spec:
         {{- toYaml .Values.deployments.strapi.annotations | nindent 8 }}
         {{- end }}
     spec:
+      volumes:
+        - name: strapi-uploads
+          persistentVolumeClaim:
+            claimName: {{ include "cacao.fullname" . }}-{{ $name }}-uploads
       containers:
         - name: strapi
           image: {{ include "cacao.strapiImage.url" . }}
@@ -49,6 +53,9 @@ spec:
           ports:
             - containerPort: 1337
               protocol: TCP
+          volumeMounts:
+            - name: strapi-uploads
+              mountPath: /app/public/uploads
           {{- if .Values.deployments.strapi.containers.strapi.resources }}
           {{- with .Values.deployments.strapi.containers.strapi.resources }}
           resources:

@@ -16,7 +16,7 @@ deployments:
         imagePullPolicy:
     config:
       # STRAPI_URL default is https://strapi.neitosden.fr
-      STRAPI_URL: https://dev.strapi.neitosden.fr
+      STRAPI_URL: https://strapi.neitosden.fr
       STRAPI_API_TOKEN:
   strapi:
     labels:
@@ -27,6 +27,9 @@ deployments:
       strapi:
         resources:
         imagePullPolicy:
+    pvc:
+      uploads:
+        storage: 100Gi
     config:
       # HOST default is 0.0.0.0
       HOST:
