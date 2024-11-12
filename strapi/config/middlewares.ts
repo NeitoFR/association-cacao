@@ -5,7 +5,7 @@ export default [
   {
     name: "strapi::cors",
     config: {
-      origin: process.env.CORS_URL ? process.env.CORS_URL.split(" ") : [],
+      origin: ["https://cacao.neitosden.fr"],
     },
   },
   "strapi::poweredBy",
