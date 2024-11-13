@@ -14,9 +14,7 @@ export default defineConfig({
       watch: { usePolling: true },
     },
   },
-
   output: "server",
-
   adapter: node({
     mode: "standalone",
   }),

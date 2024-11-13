@@ -5,15 +5,13 @@ const tabs: Tab[] = [
   { name: "Accueil", href: "/" },
   { name: "Nos Chats", href: "/nos-chats" },
 ];
-console.log(tabs);
-console.log(process.env.STRAPI_URL);
 
 const Navbar: React.FC = () => {
   return (
     <nav className="h-16 bg-orange-300 flex items-center">
-      {/* <img
+      <img
         className="h-12 w-12 ml-10"
-        src={`${process.env.REACT_APP_STRAPI_URL}/uploads/Logo_d_811c852867.png`}
+        src={`${import.meta.env.PUBLIC_STRAPI_URL}/uploads/logo_d.png`}
         alt="Logo"
       />
       {tabs.map((tab) => (
@@ -25,7 +23,7 @@ const Navbar: React.FC = () => {
           {tab.name}
         </a>
       ))}
-      <div className="bg-lime-100 flex-grow h-full"></div> */}
+      <div className="bg-lime-100 flex-grow h-full"></div>
     </nav>
   );
 };
