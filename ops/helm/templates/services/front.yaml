@@ -12,7 +12,7 @@ spec:
   - name: {{ $name }}
     port: {{ default 80 .Values.services.front.port }}
     protocol: TCP
-    targetPort: 80
+    targetPort: 3000
   selector:
     {{- (include "cacao.selectorLabels" .) | nindent 4 }}
     app.kubernetes.io/name: {{ $name }}

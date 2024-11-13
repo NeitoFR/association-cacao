@@ -43,7 +43,7 @@ spec:
             - secretRef:
                 name: {{ include "cacao.fullname" . }}-{{ $name }}-config
           ports:
-            - containerPort: 80
+            - containerPort: 3000
               protocol: TCP
           {{- if .Values.deployments.front.containers.front.resources }}
           {{- with .Values.deployments.front.containers.front.resources }}
