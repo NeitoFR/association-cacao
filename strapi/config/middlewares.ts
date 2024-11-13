@@ -2,12 +2,7 @@ export default [
   "strapi::logger",
   "strapi::errors",
   "strapi::security",
-  {
-    name: "strapi::cors",
-    config: {
-      origin: ["https://cacao.neitosden.fr"],
-    },
-  },
+  "strapi::cors",
   "strapi::poweredBy",
   "strapi::query",
   "strapi::body",
