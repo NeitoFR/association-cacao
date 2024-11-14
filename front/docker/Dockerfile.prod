@@ -1,7 +1,7 @@
 # Stage 1: Build the React app
 FROM node:20-alpine AS build
 
-ARG STRAPI_URL
+ARG PUBLIC_STRAPI_URL
 ARG STRAPI_API_TOKEN
 
 WORKDIR /app
