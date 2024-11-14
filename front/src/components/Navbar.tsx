@@ -1,4 +1,3 @@
-import type { FC } from "react";
 import { useState, useEffect } from "react";
 import type { Tab } from "../interfaces/tab";
 import "./Navbar.css";

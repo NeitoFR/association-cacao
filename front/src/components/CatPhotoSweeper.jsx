@@ -1,47 +1,49 @@
 import { useState, useEffect } from "react";
 import styles from "./CatPhotoSweeper.module.css";
 
-const CatPhotoSweeper = (props) => {
+const CatPhotoSweeper = ({ photos }) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  // console.log("photos", props.photos);
+  const [imageUrl, setImageUrl] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const handlePreviousClick = () => {
-    if (currentPhoto > 0) {
-      console.log("current : " + currentPhoto);
-      setCurrentPhoto(currentPhoto - 1);
-    } else {
-      console.log("Already at first photo");
-    }
+  const loadImage = (index = 0) => {
+    setIsLoaded(false);
+    const img = new Image();
+    img.src = `${import.meta.env.PUBLIC_STRAPI_URL}${photos[index].url}`;
+    img.onload = () => {
+      setImageUrl(img.src);
+      setIsLoaded(true);
+    };
   };
 
-  const handleNextClick = () => {
-    if (currentPhoto < props.photos.length - 1) {
-      console.log("current : " + currentPhoto);
-      setCurrentPhoto(currentPhoto + 1);
-    } else {
-      console.log("Already at last photo");
-    }
+  useEffect(() => {
+    loadImage();
+  }, []);
+
+  const handlePhotoChange = (step) => {
+    setCurrentPhoto((prev) => {
+      const newIndex = prev + step;
+      if (newIndex >= 0 && newIndex < photos.length) {
+        loadImage(newIndex);
+        return newIndex;
+      }
+      console.log(step > 0 ? "Already at last photo" : "Already at first photo");
+      return prev;
+    });
   };
 
   const displayNavigationButton = (direction) => {
-    if (props.photos.length === 1) {
-      return "";
-    }
-    if (direction === "previous" && currentPhoto === 0) {
-      return "";
-    }
-    if (direction === "next" && currentPhoto === props.photos.length - 1) {
-      return "";
-    }
-    const handleClick =
-      direction === "previous" ? handlePreviousClick : handleNextClick;
-    const style = direction === "previous" ? styles.previous : styles.next;
-    const position = direction === "previous" ? "left-0" : "right-0";
-    const justifyContent =
-      direction === "previous"
-        ? "items-center pl-4"
-        : "justify-end items-center pr-4";
-    const symbol = direction === "previous" ? "<" : ">";
+    if (photos.length <= 1) return null;
+    const isDisabled = (direction === "previous" && currentPhoto === 0) || 
+                       (direction === "next" && currentPhoto === photos.length - 1);
+    if (isDisabled) return null;
+
+    const isPrevious = direction === "previous";
+    const handleClick = () => handlePhotoChange(isPrevious ? -1 : 1);
+    const style = isPrevious ? styles.previous : styles.next;
+    const position = isPrevious ? "left-0" : "right-0";
+    const justifyContent = isPrevious ? "items-center pl-4" : "justify-end items-center pr-4";
+    const symbol = isPrevious ? "<" : ">";
 
     return (
       <div
@@ -53,18 +55,16 @@ const CatPhotoSweeper = (props) => {
     );
   };
 
-  useEffect(() => {
-    console.log("new : " + currentPhoto);
-  }, [currentPhoto]);
-
   return (
-    <div className="flex bg-orange-200 h-[9.6rem] min-h-[9.6rem] w-full relative">
+    <div
+      className="image-container "
+      style={{
+        backgroundImage: `url(${isLoaded ? imageUrl : import.meta.env.PUBLIC_STRAPI_URL + '/uploads/logo_d.png'})`,
+        minHeight: '200px',
+        maxHeight: '200px'
+      }}
+    >
       {displayNavigationButton("previous")}
-      <img
-        src={import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto].url}
-        alt={props.photos[currentPhoto].alt || "Photo de chat"}
-        className="object-cover object-center w-full h-full"
-      />
       {displayNavigationButton("next")}
     </div>
   );
