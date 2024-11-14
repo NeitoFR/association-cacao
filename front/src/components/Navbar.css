@@ -1,0 +1,22 @@
+.hamburger span {
+  transition: all 0.3s;
+  @apply h-[8%] rounded-full bg-orange-100 w-1/2 relative;
+}
+
+.hamburger span:nth-child(2)::after {
+  content: "";
+  transition: all 0.3s;
+  @apply h-full rounded-full bg-orange-100 w-full absolute top-0 left-0;
+}
+
+.hamburger:hover span:nth-child(odd) {
+  opacity: 0;
+}
+
+.hamburger:hover span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+
+.hamburger:hover span:nth-child(2)::after {
+  transform: rotate(90deg);
+}

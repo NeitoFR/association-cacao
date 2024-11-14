@@ -17,11 +17,7 @@ console.log(cat);
 <div
   class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden"
 >
-  <CatPhotoSweeper
-    photos={cat.photos}
-    baseUrl={import.meta.env.STRAPI_URL}
-    client:load
-  />
+  <CatPhotoSweeper photos={cat.photos} client:load />
   {
     cat.tags.length !== 0 ? (
       <div class="h-10 m-1 flex flex-row items-center overflow-x-scroll">

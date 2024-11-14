@@ -2,49 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 
 const pageTitle = "Accueil";
-function toggleActive(event: MouseEvent) {
-  (event.currentTarget as HTMLElement).classList.toggle("active");
-}
 ---
 
 <Layout title={pageTitle}>
-  <div class="flex justify-center items-center w-full">
-    <button
-      class="hamburger flex flex-col justify-center items-center bg-orange-300 rounded-full h-16 w-16 space-y-1"
-    >
-      {
-        Array(3)
-          .fill(null)
-          .map(() => <span />)
-      }
-    </button>
-  </div>
+  <div class="flex justify-center items-center w-full">ACCUEIL</div>
 </Layout>
-<style>
-  .hamburger span {
-    transition: all 0.3s;
-    @apply h-[8%] rounded-full bg-orange-100 w-1/2 relative;
-  }
-
-  .hamburger:hover span:nth-child(odd) {
-    opacity: 0;
-  }
-
-  .hamburger span:nth-child(2)::after {
-    content: "";
-    transition: all 0.3s;
-    @apply h-full rounded-full bg-orange-100 w-full absolute top-0 left-0;
-  }
-  .hamburger:hover span:nth-child(2),
-  .hamburger:hover span:nth-child(2)::after {
-    transform-origin: center;
-  }
-
-  .hamburger:hover span:nth-child(2) {
-    transform: rotate(-45deg);
-  }
-
-  .hamburger:hover span:nth-child(2)::after {
-    transform: rotate(90deg);
-  }
-</style>

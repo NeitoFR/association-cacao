@@ -1,5 +1,6 @@
 import React from "react";
 import type { Tab } from "../interfaces/tab";
+import "./Navbar.css";
 
 const tabs: Tab[] = [
   { name: "Accueil", href: "/" },
@@ -23,7 +24,16 @@ const Navbar: React.FC = () => {
           {tab.name}
         </a>
       ))}
-      <div className="bg-lime-100 flex-grow h-full"></div>
+      <div className="flex-grow h-full"></div>
+      <button
+        className={`hamburger flex flex-col justify-center items-center bg-transparent h-16 w-16 space-y-1`}
+      >
+        {Array(3)
+          .fill(null)
+          .map(() => (
+            <span />
+          ))}
+      </button>
     </nav>
   );
 };
