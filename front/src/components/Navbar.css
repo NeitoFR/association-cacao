@@ -1,0 +1,35 @@
+/* Start of hamburger CSS section */
+.hamburger span {
+  transition: all 0.3s;
+  @apply h-[8%] rounded-full bg-orange-100 w-1/2 relative;
+}
+
+.hamburger span:nth-child(2)::after {
+  content: "";
+  transition: all 0.3s;
+  @apply h-full rounded-full bg-orange-100 w-full absolute top-0 left-0;
+}
+
+.hamburger.active span:nth-child(odd) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(2) {
+  transform: rotate(-45deg);
+}
+
+.hamburger.active span:nth-child(2)::after {
+  transform: rotate(90deg);
+}
+/* End of hamburger CSS section */
+
+/* Start of navbar CSS section */
+.navbar {
+  transition: height 0.3s;
+  @apply h-16;
+}
+.navbar.expanded {
+  transition: height 0.3s;
+  @apply h-48;
+}
+/* End of navbar CSS section */

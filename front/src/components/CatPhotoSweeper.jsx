@@ -61,7 +61,7 @@ const CatPhotoSweeper = (props) => {
     <div className="flex bg-orange-200 h-[9.6rem] min-h-[9.6rem] w-full relative">
       {displayNavigationButton("previous")}
       <img
-        src={props.baseUrl + props.photos[currentPhoto].url}
+        src={import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto].url}
         alt={props.photos[currentPhoto].alt || "Photo de chat"}
         className="object-cover object-center w-full h-full"
       />
