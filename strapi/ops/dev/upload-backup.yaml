@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: upload-backup
+  namespace: cacao-dev
+spec:
+  schedule: 0 2 * * * # This will run the job daily at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: upload-backup
+              image: ghcr.io/neitofr/cacao-toolbox:latest
+              imagePullPolicy: Always
+              envFrom:
+                - secretRef:
+                    name: cacao-db-backup-config
+              command: ["sleep", "infinity"]
+              volumeMounts:
+                - name: s3cfg
+                  mountPath: /root/.s3cfg
+                  subPath: s3cfg
+                - name: script
+                  mountPath: /tmp/script.sh
+                  subPath: backup.sh
+                - mountPath: /app
+                  name: uploads
+          restartPolicy: OnFailure
+          imagePullSecrets:
+            - name: regcred
+          volumes:
+            - name: s3cfg
+              configMap:
+                name: cacao-s3cfg-config
+            - name: script
+              configMap:
+                name: cacao-upload-backup-script
+            - name: uploads
+              persistentVolumeClaim:
+                claimName: strapi-dev-pvc

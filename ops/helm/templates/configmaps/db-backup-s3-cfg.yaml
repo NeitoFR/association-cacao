@@ -1,9 +1,13 @@
 {{- if .Values.pgbackup.enabled -}}
+{{- $name := "db-backup" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "cacao.fullname" . }}-s3cfg-config
+  name: {{ include "cacao.fullname" . }}-{{ $name }}-s3cfg-config
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
 data:
   s3cfg: |
     [default]

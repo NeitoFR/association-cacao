@@ -1,0 +1,18 @@
+{{- if .Values.pgbackup.enabled -}}
+{{- $name := "upload-backup" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cacao.fullname" . }}-{{ $name }}-script
+  namespace: {{ include "cacao.namespace" . }}
+  labels:
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+data:
+  backup.sh: |
+    #!/bin/sh
+    set -e
+
+    echo "Syncing $SRC_DIR directory to S3..."
+    s3cmd sync $SRC_DIR s3://$S3_BUCKET/$DEST_DIR --recursive
+{{- end -}}

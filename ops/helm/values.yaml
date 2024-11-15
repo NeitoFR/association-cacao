@@ -139,3 +139,19 @@ pgbackup:
     S3_ACCESS_KEY:
     S3_SECRET_KEY:
     S3_REGION:
+
+upload_backup: 
+  enabled: yes
+  # default schedule is 0 */4 * * * (every 4 hours)
+  schedule:
+  image:
+  config:
+    S3_URL:
+    S3_BUCKET:
+    # S3_BUCKET_URL default is S3_URL
+    S3_BUCKET_URL:
+    S3_ACCESS_KEY:
+    S3_SECRET_KEY:
+    S3_REGION:
+    SRC_DIR:
+    DEST_DIR:

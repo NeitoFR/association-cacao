@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cacao-upload-backup-script
+  namespace: cacao-dev
+data:
+  backup.sh: |
+    #!/bin/sh
+    set -e
+
+    echo "Syncing $SRC_DIR directory to S3..."
+    s3cmd sync $SRC_DIR s3://$S3_BUCKET/$DEST_DIR --recursive

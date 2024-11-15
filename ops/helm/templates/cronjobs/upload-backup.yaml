@@ -1,5 +1,5 @@
-{{- if .Values.pgbackup.enabled -}}
-{{- $name := "db-backup" -}}
+{{- if .Values.upload_backup.enabled -}}
+{{- $name := "upload-backup" -}}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -11,13 +11,13 @@ metadata:
   annotations:
     {{- (include "cacao.globalAnnotations" . ) | nindent 4 }}
 spec:
-  schedule: {{ default "0 2 * * *" .Values.pgbackup.schedule }} # This will run the job daily at 2 AM
+  schedule: {{ default "0 */4 * * *" .Values.upload_backup.schedule }}
   jobTemplate:
     spec:
       template:
         spec:
           containers:
-            - name: db-backup
+            - name: upload-backup
               image: {{ default "ghcr.io/neitofr/cacao-toolbox:latest" .Values.pgbackup.image }}
               imagePullPolicy: IfNotPresent
               envFrom:
@@ -31,6 +31,8 @@ spec:
                 - name: script
                   mountPath: /tmp/script.sh
                   subPath: backup.sh
+                - mountPath: /app
+                  name: strapi-uploads
           restartPolicy: OnFailure
           {{- (include "cacao.imagePullSecrets" .) | nindent 10 }}
           volumes:
@@ -40,4 +42,7 @@ spec:
             - name: script
               configMap:
                 name: {{ include "cacao.fullname" . }}-{{ $name }}-script
+            - name: strapi-uploads
+              persistentVolumeClaim:
+                claimName: {{ include "cacao.fullname" . }}-{{ $name }}-uploads
 {{- end -}}

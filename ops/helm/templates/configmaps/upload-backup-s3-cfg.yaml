@@ -1,0 +1,20 @@
+{{- if .Values.upload_backup.enabled -}}
+{{- $name := "upload-backup" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cacao.fullname" . }}-{{ $name }}-s3cfg-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- (include "cacao.commonLabels" .) | nindent 4 }}
+    app.kubernetes.io/name: {{ $name }}
+data:
+  s3cfg: |
+    [default]
+    access_key = $S3_ACCESS_KEY
+    secret_key = $S3_SECRET_KEY
+    host_base = $S3_URL
+    host_bucket = $S3_BUCKET_URL
+    use_https = True
+    region = $S3_REGION
+{{- end -}}
