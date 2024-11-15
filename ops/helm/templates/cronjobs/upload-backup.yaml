@@ -31,7 +31,7 @@ spec:
                 - name: script
                   mountPath: /tmp/script.sh
                   subPath: backup.sh
-                - mountPath: /app
+                - mountPath: {{ .Values.upload_backup.config.SRC_DIR }}
                   name: strapi-uploads
           restartPolicy: OnFailure
           {{- (include "cacao.imagePullSecrets" .) | nindent 10 }}
@@ -44,5 +44,5 @@ spec:
                 name: {{ include "cacao.fullname" . }}-{{ $name }}-script
             - name: strapi-uploads
               persistentVolumeClaim:
-                claimName: {{ include "cacao.fullname" . }}-{{ $name }}-uploads
+                claimName: {{ include "cacao.fullname" . }}-strapi-uploads
 {{- end -}}
