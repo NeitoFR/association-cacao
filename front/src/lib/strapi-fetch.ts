@@ -26,12 +26,11 @@ export default async function strapiFetch<T>({
   const url = new URL(`${import.meta.env.PUBLIC_STRAPI_URL}/api/${endpoint}`);
 
   // Add headers
+  // console.log(import.meta.env.STRAPI_API_TOKEN);
   const headers = new Headers();
   headers.append("Authorization", `Bearer ${import.meta.env.STRAPI_API_TOKEN}`);
 
-  if (query) {
-    url.search = query;
-  }
+  query ? (url.search = query) : null;
 
   const res = await fetch(url.toString(), {
     headers: headers,

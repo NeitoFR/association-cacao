@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Tab } from "../interfaces/tab";
+import type { Tab } from "../../interfaces/NavbarTabs";
 import "./Navbar.css";
 
 const tabs: Tab[] = [
@@ -17,16 +17,16 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`navbar bg-orange-300 flex flex-col overflow-hidden ${isMenuOpen ? "expanded" : ""}`}
+      className={`navbar flex flex-col overflow-hidden bg-orange-300 ${isMenuOpen ? "expanded" : ""}`}
     >
       <div className="flex h-16 w-full items-center">
         <img
-          className="h-12 w-12 md:ml-10 ml-4"
+          className="ml-4 h-12 w-12 md:ml-10"
           src={`${import.meta.env.PUBLIC_STRAPI_URL}/uploads/logo_d.png`}
           alt="Logo"
         />
         <div
-          className={`opacity-100 duration-300 h-16 hidden md:flex md:items-center ${isMenuOpen ? "opacity-0" : ""}`}
+          className={`hidden h-16 opacity-100 duration-300 md:flex md:items-center ${isMenuOpen ? "opacity-0" : ""}`}
         >
           {tabs.map((tab) => (
             <a
@@ -38,9 +38,9 @@ const Navbar: React.FC = () => {
             </a>
           ))}
         </div>
-        <div className="flex-grow h-full"></div>
+        <div className="h-full flex-grow"></div>
         <button
-          className={`hamburger md:hidden flex flex-col justify-center items-center bg-transparent h-16 w-16 space-y-1 shrink-0 ${isMenuOpen ? "active" : ""} `}
+          className={`hamburger flex h-16 w-16 shrink-0 flex-col items-center justify-center space-y-1 bg-transparent md:hidden ${isMenuOpen ? "active" : ""} `}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {Array(3)
@@ -51,13 +51,13 @@ const Navbar: React.FC = () => {
         </button>
       </div>
       <div
-        className={`flex flex-col opacity-0 duration-300 overflow-y-auto ${isMenuOpen ? "opacity-100" : ""}`}
+        className={`flex flex-col overflow-y-auto opacity-0 duration-300 ${isMenuOpen ? "opacity-100" : ""}`}
       >
         {tabs.map((tab) => (
           <a
             key={tab.name}
             href={tab.href}
-            className="pl-8 py-4 h-16 botext-lg text-gray-800 text-xl border-b-2 border-b-orange-100 hover:bg-orange-400 duration-200"
+            className="h-16 border-b-2 border-b-orange-100 py-4 pl-8 text-xl text-gray-800 duration-200 hover:bg-orange-400"
           >
             {tab.name}
           </a>
