@@ -15,29 +15,74 @@ console.log(cat);
 ---
 
 <div
-  class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden max-w-sm mb-5 ml-5 mr-5"
+  class="w-64 h-[24rem] flex flex-col shadow-2xl max-w-sm mb-5 ml-5 mr-5 rounded-2xl"
 >
-  <CatPhotoSweeper photos={cat.photos} client:load />
-  {
-    cat.tags.length !== 0 ? (
-      <div class="pt-2 pb-3 m-1 flex flex-row items-center overflow-x-scroll custom-scrollbar-x">
+<div class="flex-grow font-bold p-2 mx-auto">{cat.name}</div>
+<CatPhotoSweeper photos={cat.photos} client:load />
+<!-- {
+  cat.tags.length !== 0 ? (
+    <div class="card-tags">
+      <div class="flex space-x-4 whitespace-nowrap">
         {cat.tags.map((tag) => {
-          return (
-            <span class="bg-orange-500 text-stone-50 text-xs p-1 m-1 rounded-lg wrap">
-              {tag.name}
-            </span>
-          );
-        })}
+        return (
+          <span class="bg-orange-500 text-stone-50 text-xs p-1 m-1 rounded-lg">
+            {tag.name}
+          </span>
+        );
+      })}
       </div>
-    ) : null
-  }
+      
+    </div>
+  ) : null
+} -->
 
-  <div class="flex-grow bg-orange-300 pt-0 p-5 custom-scrollbar-y">
-    <BlocksRenderer content={cat.description} />
-  </div>
-  <div class="h-12 bg-orange-400 flex flex-row items-center">
-    <div class="flex-grow text-white font-bold p-2">{cat.name}</div>
-    <Image src={search} alt="" class={"w-6 h-6 mr-3"} />
-    <Image src={more} alt="" class={"w-6 h-6 mr-3"} />
+<!-- {
+  cat.tags.length !== 0 ? (
+  <div class="w-96 h-[2rem] overflow-x-auto border border-gray-300">
+      <div class="flex space-x-4 whitespace-nowrap">
+        {cat.tags.map((tag) => {
+        return (
+        <div class="w-32 bg-blue-500 text-white flex items-center justify-center">
+            {tag.name}
+          </div>
+        );
+      })}
+      </div>
+      
+    </div>
+  ) : null
+} -->
+<div class="w-96 h-[20rem] overflow-x-auto border border-gray-300 p-4">
+  <div class="flex space-x-4 whitespace-nowrap">
+    <div class="w-32 bg-blue-500 text-white flex items-center justify-center">Item 1</div>
+    <div class="w-32 bg-green-500 text-white flex items-center justify-center">Item 2</div>
+    <div class="w-32 bg-red-500 text-white flex items-center justify-center">Item 3</div>
+    <div class="w-32 bg-yellow-500 text-white flex items-center justify-center">Item 4</div>
+    <div class="w-32 bg-purple-500 text-white flex items-center justify-center">Item 5</div>
+    <div class="w-32 bg-pink-500 text-white flex items-center justify-center">Item 6</div>
+    <div class="w-32 bg-teal-500 text-white flex items-center justify-center">Item 7</div>
   </div>
 </div>
+
+<div class="flex-grow pt-0 p-5 custom-scrollbar-y">
+  <BlocksRenderer content={cat.description} />
+</div>
+
+<!-- <div class="flex-grow bg-orange-300 pt-0 p-5 custom-scrollbar-y">
+  <BlocksRenderer content={cat.description} />
+</div> -->
+<div class="h-12 bg-orange-400 flex flex-row items-center">
+  <a href={'/nos-chats/' + cat.documentId}>
+    <Image src={search} alt={'Search ' + cat.name} class={'w-6 h-6 mr-3'} />
+  </a>
+  <Image src={more} alt="" class={'w-6 h-6 mr-3'} />
+</div>
+</div>
+
+<style>
+  .card-tags {
+    /* overflow: hidden; */
+    overflow-x: auto;
+    padding: 10px;
+  }
+</style>

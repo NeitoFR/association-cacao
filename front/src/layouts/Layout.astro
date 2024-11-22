@@ -87,23 +87,43 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
     height: 0px;
   }
 
-  .image-container {
-    position: relative;
-    width: 100%;
-    height: 400px; /* Adjust height as needed */
-    background-size: cover;
-    background-position: center;
-    transition: background-image 0.5s ease; /* Smooth fade-in for background */
-  }
+ .image-container {
+  position: relative;
+  width: 90%;
+  height: 400px; /* Adjust height as needed */
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.5s ease; /* Smooth fade-in for background */
+}
 
-  .loading {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    background-color: #ccc; /* Placeholder background */
-  }
+.loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #ccc; /* Placeholder background */
+}
+
+body {
+  background: linear-gradient(to right, #FFF7AD, #FFA9F9);
+}
+
+.custom-cat-card div {
+  position: relative;
+  background-color: #FBB07E;
+}
+.custom-cat-card div::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: linear-gradient(to right, #FE8378, #AF72F7); /* Match body gradient */
+  border-radius: 5px;
+}
 </style>

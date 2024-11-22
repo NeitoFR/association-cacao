@@ -62,7 +62,7 @@ const CatPhotoSweeper = ({ photos }) => {
 
   return (
     <div
-      className="image-container"
+      className="image-container mx-auto rounded-2xl"
       style={{
         backgroundImage: `url(${isLoaded ? imageUrl : import.meta.env.PUBLIC_STRAPI_URL + "/uploads/logo_d.png"})`,
         minHeight: "200px",
