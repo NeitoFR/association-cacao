@@ -1,8 +1,8 @@
 ---
-import strapiFetch from "../lib/strapi-fetch";
-import type { Cat } from "../interfaces/cat";
-import Layout from "../layouts/Layout.astro";
-import CatCard from "../components/CatCard.astro";
+import strapiFetch from "../../lib/strapi-fetch";
+import type { Cat } from "../../interfaces/cat";
+import Layout from "../../layouts/Layout.astro";
+import CatCard from "../../components/CatCard.astro";
 import qs from "qs";
 
 const cats: Cat[] = await strapiFetch<Cat[]>({
