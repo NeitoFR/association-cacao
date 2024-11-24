@@ -15,7 +15,7 @@ console.log(cat);
 ---
 
 <div
-  class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden max-w-sm mb-5 ml-5 mr-5"
+class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden max-w-sm mb-5 ml-5 mr-5"
 >
   <CatPhotoSweeper photos={cat.photos} client:load />
   {
@@ -37,7 +37,9 @@ console.log(cat);
   </div>
   <div class="h-12 bg-orange-400 flex flex-row items-center">
     <div class="flex-grow text-white font-bold p-2">{cat.name}</div>
-    <Image src={search} alt="" class={"w-6 h-6 mr-3"} />
-    <Image src={more} alt="" class={"w-6 h-6 mr-3"} />
+    <a href={'/nos-chats/' + cat.documentId}>
+      <Image src={search} alt={'Search ' + cat.name} class={'w-6 h-6 mr-3'} />
+    </a>
+    <Image src={more} alt="" class={'w-6 h-6 mr-3'} />
   </div>
 </div>

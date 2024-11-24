@@ -1,8 +1,8 @@
 ---
-import strapiFetch from "../lib/strapi-fetch";
-import type { Cat } from "../interfaces/cat";
-import Layout from "../layouts/Layout.astro";
-import CatCard from "../components/CatCard.astro";
+import strapiFetch from "../../lib/strapi-fetch";
+import type { Cat } from "../../interfaces/cat";
+import Layout from "../../layouts/Layout.astro";
+import CatCard from "../../components/CatCard.astro";
 import qs from "qs";
 
 const cats: Cat[] = await strapiFetch<Cat[]>({
@@ -36,8 +36,10 @@ const pageTitle = "Nos Chats";
 <Layout title={pageTitle}>
   <div class="flex flex-col w-full">
     <h1 class="text-3xl font-bold mx-auto my-6">{pageTitle}</h1>
+    
     <div class="flex flex-wrap justify-center">
       {cats.map((cat) => <CatCard cat={cat} />)}
     </div>
   </div>
 </Layout>
+

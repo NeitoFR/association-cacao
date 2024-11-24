@@ -9,6 +9,7 @@ interface CatTag {
   name: string;
 }
 interface Cat {
+  documentId: string;
   name: string;
   description: BlocksContent;
   adopted: boolean;
