@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "navbar_tabs",
+  "info": {
+    "singularName": "navbar-tab",
+    "pluralName": "navbar-tabs",
+    "displayName": "Navbar Tabs",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tabs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tab.tab"
+    },
+    "name": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "order": {
+      "type": "integer",
+      "unique": true
+    }
+  }
+}

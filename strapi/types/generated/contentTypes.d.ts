@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiCatCat extends Struct.CollectionTypeSchema {
   collectionName: "cats";
   info: {
+    description: "";
     displayName: "Cats";
     pluralName: "cats";
     singularName: "cat";
@@ -385,6 +386,7 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
+    isDogFriendly: Schema.Attribute.Enumeration<["yes", "no", "maybe"]>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::cat.cat"> &
       Schema.Attribute.Private;
@@ -395,6 +397,75 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     tags: Schema.Attribute.Relation<"oneToMany", "api::tag.tag">;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFounderFounder extends Struct.SingleTypeSchema {
+  collectionName: "founders";
+  info: {
+    displayName: "founders";
+    pluralName: "founders";
+    singularName: "founder";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    content: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::founder.founder"
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiNavbarTabNavbarTab extends Struct.CollectionTypeSchema {
+  collectionName: "navbar_tabs";
+  info: {
+    description: "";
+    displayName: "Navbar Tabs";
+    pluralName: "navbar-tabs";
+    singularName: "navbar-tab";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+    icon: Schema.Attribute.Media<"images" | "files" | "videos" | "audios">;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::navbar-tab.navbar-tab"
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    order: Schema.Attribute.Integer & Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    tabs: Schema.Attribute.Relation<"oneToMany", "api::tab.tab">;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private;
@@ -984,6 +1055,8 @@ declare module "@strapi/strapi" {
       "admin::transfer-token-permission": AdminTransferTokenPermission;
       "admin::user": AdminUser;
       "api::cat.cat": ApiCatCat;
+      "api::founder.founder": ApiFounderFounder;
+      "api::navbar-tab.navbar-tab": ApiNavbarTabNavbarTab;
       "api::tab.tab": ApiTabTab;
       "api::tag.tag": ApiTagTag;
       "plugin::content-releases.release": PluginContentReleasesRelease;
