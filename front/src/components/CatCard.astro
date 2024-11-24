@@ -1,12 +1,10 @@
 ---
 import type { Cat } from "../interfaces/cat";
-import {
-  BlocksRenderer
-} from "@strapi/blocks-react-renderer";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import CatPhotoSweeper from "./CatPhotoSweeper";
 import Image from "astro/components/Image.astro";
-import search from '../../public/icons/search.svg';
-import more from '../../public/icons/more.svg';
+import search from "../../public/icons/search.svg";
+import more from "../../public/icons/more.svg";
 
 interface Props {
   cat: Cat;
@@ -19,27 +17,27 @@ console.log(cat);
 <div
   class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden max-w-sm mb-5 ml-5 mr-5"
 >
-<CatPhotoSweeper photos={cat.photos} client:load />
-{
-  cat.tags.length !== 0 ? (
-    <div class="pt-2 pb-3 m-1 flex flex-row items-center overflow-x-scroll custom-scrollbar-x">
-      {cat.tags.map((tag) => {
-        return (
-          <span class="bg-orange-500 text-stone-50 text-xs p-1 m-1 rounded-lg wrap">
-            {tag.name}
-          </span>
-        );
-      })}
-    </div>
-  ) : null
-}
+  <CatPhotoSweeper photos={cat.photos} client:load />
+  {
+    cat.tags.length !== 0 ? (
+      <div class="pt-2 pb-3 m-1 flex flex-row items-center overflow-x-scroll custom-scrollbar-x">
+        {cat.tags.map((tag) => {
+          return (
+            <span class="bg-orange-500 text-stone-50 text-xs p-1 m-1 rounded-lg wrap">
+              {tag.name}
+            </span>
+          );
+        })}
+      </div>
+    ) : null
+  }
 
-<div class="flex-grow bg-orange-300 pt-0 p-5 custom-scrollbar-y">
-  <BlocksRenderer content={cat.description} />
-</div>
-<div class="h-12 bg-orange-400 flex flex-row items-center">
-  <div class="flex-grow text-white font-bold p-2">{cat.name}</div>
-  <Image src={search} alt="" class={'w-6 h-6 mr-3'} />
-  <Image src={more} alt="" class={'w-6 h-6 mr-3'} />
-</div>
+  <div class="flex-grow bg-orange-300 pt-0 p-5 custom-scrollbar-y">
+    <BlocksRenderer content={cat.description} />
+  </div>
+  <div class="h-12 bg-orange-400 flex flex-row items-center">
+    <div class="flex-grow text-white font-bold p-2">{cat.name}</div>
+    <Image src={search} alt="" class={"w-6 h-6 mr-3"} />
+    <Image src={more} alt="" class={"w-6 h-6 mr-3"} />
+  </div>
 </div>

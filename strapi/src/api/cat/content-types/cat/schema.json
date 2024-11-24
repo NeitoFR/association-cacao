@@ -4,7 +4,8 @@
   "info": {
     "singularName": "cat",
     "pluralName": "cats",
-    "displayName": "Cats"
+    "displayName": "Cats",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -30,6 +31,10 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::tag.tag"
+    },
+    "isDogFriendly": {
+      "type": "enumeration",
+      "enum": ["yes", "no", "maybe"]
     }
   }
 }

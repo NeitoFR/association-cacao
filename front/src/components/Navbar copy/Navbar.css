@@ -1,13 +1,13 @@
 /* Start of hamburger CSS section */
 .hamburger span {
   transition: all 0.3s;
-  @apply h-[8%] rounded-full bg-orange-100 w-1/2 relative;
+  @apply relative h-[8%] w-1/2 rounded-full bg-orange-100;
 }
 
 .hamburger span:nth-child(2)::after {
   content: "";
   transition: all 0.3s;
-  @apply h-full rounded-full bg-orange-100 w-full absolute top-0 left-0;
+  @apply absolute left-0 top-0 h-full w-full rounded-full bg-orange-100;
 }
 
 .hamburger.active span:nth-child(odd) {

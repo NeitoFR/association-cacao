@@ -27,27 +27,32 @@ const CatPhotoSweeper = ({ photos }) => {
         loadImage(newIndex);
         return newIndex;
       }
-      console.log(step > 0 ? "Already at last photo" : "Already at first photo");
+      console.log(
+        step > 0 ? "Already at last photo" : "Already at first photo",
+      );
       return prev;
     });
   };
 
   const displayNavigationButton = (direction) => {
     if (photos.length <= 1) return null;
-    const isDisabled = (direction === "previous" && currentPhoto === 0) || 
-                       (direction === "next" && currentPhoto === photos.length - 1);
+    const isDisabled =
+      (direction === "previous" && currentPhoto === 0) ||
+      (direction === "next" && currentPhoto === photos.length - 1);
     if (isDisabled) return null;
 
     const isPrevious = direction === "previous";
     const handleClick = () => handlePhotoChange(isPrevious ? -1 : 1);
     const style = isPrevious ? styles.previous : styles.next;
     const position = isPrevious ? "left-0" : "right-0";
-    const justifyContent = isPrevious ? "items-center pl-4" : "justify-end items-center pr-4";
+    const justifyContent = isPrevious
+      ? "items-center pl-4"
+      : "justify-end items-center pr-4";
     const symbol = isPrevious ? "<" : ">";
 
     return (
       <div
-        className={`${style} w-1/2 cursor-pointer absolute ${position} top-0 h-full flex ${justifyContent} bg-orange-400 text-white opacity-0`}
+        className={`${style} absolute w-1/2 cursor-pointer ${position} top-0 flex h-full ${justifyContent} bg-orange-400 text-white opacity-0`}
         onClick={handleClick}
       >
         {symbol}
@@ -57,11 +62,11 @@ const CatPhotoSweeper = ({ photos }) => {
 
   return (
     <div
-      className="image-container "
+      className="image-container"
       style={{
-        backgroundImage: `url(${isLoaded ? imageUrl : import.meta.env.PUBLIC_STRAPI_URL + '/uploads/logo_d.png'})`,
-        minHeight: '200px',
-        maxHeight: '200px'
+        backgroundImage: `url(${isLoaded ? imageUrl : import.meta.env.PUBLIC_STRAPI_URL + "/uploads/logo_d.png"})`,
+        minHeight: "200px",
+        maxHeight: "200px",
       }}
     >
       {displayNavigationButton("previous")}

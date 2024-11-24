@@ -14,7 +14,11 @@ restart: ## Restart the application
 
 down: ## Stop the application
 	docker-compose -f ./ops/docker-compose.yml down
-	@echo "Access UI: http://localhost:4321"
+
+.PHONY: kill
+
+kill: ## Stop the application
+	docker-compose -f ./ops/docker-compose.yml kill
 
 .PHONY: build
 
