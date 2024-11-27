@@ -13,33 +13,41 @@ interface Props {
 const { cat } = Astro.props;
 console.log(cat);
 ---
+<div class="w-96 py-2 px-4 bg-orange-100 rounded-3xl border-[10px] border-amber-700">
+  <!-- Title -->
+  <h1 class="text-center text-3xl font-bold text-stone-600 mb-2">{cat.name}</h1>
 
-<div
-class="w-64 h-[24rem] flex flex-col rounded-lg shadow-2xl bg-orange-300 overflow-hidden max-w-sm mb-5 ml-5 mr-5"
->
-  <CatPhotoSweeper photos={cat.photos} client:load />
-  {
-    cat.tags.length !== 0 ? (
-      <div class="pt-2 pb-3 m-1 flex flex-row items-center overflow-x-scroll custom-scrollbar-x">
-        {cat.tags.map((tag) => {
-          return (
-            <span class="bg-orange-500 text-stone-50 text-xs p-1 m-1 rounded-lg wrap">
-              {tag.name}
-            </span>
-          );
-        })}
-      </div>
-    ) : null
-  }
-
-  <div class="flex-grow bg-orange-300 pt-0 p-5 custom-scrollbar-y">
-    <BlocksRenderer content={cat.description} />
+  <!-- Image -->
+  <div class="relative overflow-hidden rounded-2xl border-[3px] border-white">
+    {cat.photos && cat.photos[0] && (
+      <CatPhotoSweeper photos={cat.photos} client:load />
+    )}
   </div>
-  <div class="h-12 bg-orange-400 flex flex-row items-center">
-    <div class="flex-grow text-white font-bold p-2">{cat.name}</div>
-    <a href={'/nos-chats/' + cat.documentId}>
-      <Image src={search} alt={'Search ' + cat.name} class={'w-6 h-6 mr-3'} />
-    </a>
-    <Image src={more} alt="" class={'w-6 h-6 mr-3'} />
+
+  <!-- Details -->
+  <div>
+    <div class="flex py-3 px-6 justify-between w-full font-extrabold text-sm text-stone-600">
+      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Mâle</span></div>
+      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Tigré</span></div>
+      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>2,5 mois</span></div>
+    </div>
+
+    <!-- Description -->
+    <p class="text-sm text-stone-600 px-3 bg-white rounded-2xl" style="text-decoration: overline white bg ;">
+      Arrivé chez nous à l'âge de 2 jours, Origan a été biberonné par nos soins jusqu'à son sevrage. Maintenant, c’est un petit chaton plein de vie très joueur et câlin en forte demande d’interactions avec l’humain, un vrai pot de colle!
+    </p>
+    <div class="flex py-2">
+      <!-- Compatibility -->
+      <div class="flex flex-col space-y-1 w-1/2 ">
+        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/checkmark2.svg"} alt="" class="size-4 mr-1"><span>chats</span></div>
+        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/cross.svg"} alt="" class="size-4 mr-1"><span>chiens</span></div>
+        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/question.svg"} alt="" class="size-4 mr-1"><span>enfants</span></div>
+      </div>
+      <!-- Health -->
+      <div class="w-1/2 flex flex-col items-center justify-center space-y-1">
+        <span>Maladies</span>
+        <span>N/A</span>
+      </div>
+    </div>
   </div>
 </div>
