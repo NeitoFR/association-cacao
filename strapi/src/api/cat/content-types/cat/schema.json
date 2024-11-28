@@ -19,7 +19,12 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "description": {
       "type": "blocks"
@@ -32,9 +37,18 @@
       "relation": "oneToMany",
       "target": "api::tag.tag"
     },
-    "isDogFriendly": {
-      "type": "enumeration",
-      "enum": ["yes", "no", "maybe"]
+    "maladies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::maladie.maladie"
+    },
+    "richdesc": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "rich"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
     }
   }
 }
