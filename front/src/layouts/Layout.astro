@@ -52,7 +52,7 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-orange-100">
+  <body class="min-h-screen flex flex-col bg-primary">
     <Navbar tabs={navbarTabs} client:load />
     <main class="flex-grow flex">
       <slot />
@@ -61,6 +61,21 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
   </body>
 </html>
 <style is:global>
+  :root {
+    --primary-color: #fde5cb;
+    --secondary-color: #7e8667;
+    --tertiary-color: #ffffff;
+    --text-color: #000000;
+    --donate-color: #da2841;
+    --link-color: #782e07;
+    --cacao-meanings-color: #782e07;
+    --cat-card-border-color: #bf7143;
+    --cat-card-bg-color: #f6e3d7;
+    --cat-diseases-bg-color: #f6e3d7;
+    --page-title-color: #ffffff;
+    --navbar-bg-color: #ffffff;
+  }
+
   .custom-scrollbar-x,
   .custom-scrollbar-y {
     overflow: hidden;
@@ -78,9 +93,6 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
   ::-webkit-scrollbar-thumb {
     background: rgb(241, 165, 99);
     border-radius: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    /* background-color: rgb(253 186 116 / var(--tw-bg-opacity)); */
   }
   ::-webkit-scrollbar-button {
     width: 0px;
@@ -105,25 +117,5 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
   font-size: 1.5rem;
   color: white;
   background-color: #ccc; /* Placeholder background */
-}
-
-body {
-  background: linear-gradient(to right, #FFF7AD, #FFA9F9);
-}
-
-.custom-cat-card div {
-  position: relative;
-  background-color: #FBB07E;
-}
-.custom-cat-card div::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  z-index: -1;
-  background: linear-gradient(to right, #FE8378, #AF72F7); /* Match body gradient */
-  border-radius: 5px;
 }
 </style>

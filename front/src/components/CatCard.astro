@@ -13,7 +13,7 @@ interface Props {
 const { cat } = Astro.props;
 console.log(cat);
 ---
-<div class="w-96 py-2 px-4 bg-orange-100 rounded-3xl border-[10px] border-amber-700">
+<div class="w-96 py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg">
   <!-- Title -->
   <h1 class="text-center text-3xl font-bold text-stone-600 mb-2">{cat.name}</h1>
 
@@ -33,7 +33,7 @@ console.log(cat);
     </div>
 
     <!-- Description -->
-    <p class="text-sm text-stone-600 px-3 bg-white rounded-2xl" style="text-decoration: overline white bg ;">
+    <p class="text-sm text-text px-3 bg-tertiary rounded-2xl" style="text-decoration: overline white bg ;">
       Arrivé chez nous à l'âge de 2 jours, Origan a été biberonné par nos soins jusqu'à son sevrage. Maintenant, c’est un petit chaton plein de vie très joueur et câlin en forte demande d’interactions avec l’humain, un vrai pot de colle!
     </p>
     <div class="flex py-2">
