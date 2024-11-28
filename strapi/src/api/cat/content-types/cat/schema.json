@@ -32,9 +32,10 @@
       "relation": "oneToMany",
       "target": "api::tag.tag"
     },
-    "isDogFriendly": {
-      "type": "enumeration",
-      "enum": ["yes", "no", "maybe"]
+    "maladies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::maladie.maladie"
     }
   }
 }

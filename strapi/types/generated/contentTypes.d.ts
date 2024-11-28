@@ -386,10 +386,10 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
-    isDogFriendly: Schema.Attribute.Enumeration<["yes", "no", "maybe"]>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<"oneToMany", "api::cat.cat"> &
       Schema.Attribute.Private;
+    maladies: Schema.Attribute.Relation<"oneToMany", "api::maladie.maladie">;
     name: Schema.Attribute.String;
     photos: Schema.Attribute.Media<
       "images" | "files" | "videos" | "audios",
@@ -433,6 +433,51 @@ export interface ApiFounderFounder extends Struct.SingleTypeSchema {
       "oneToMany",
       "api::founder.founder"
     >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMaladieMaladie extends Struct.CollectionTypeSchema {
+  collectionName: "maladies";
+  info: {
+    displayName: "Maladies";
+    pluralName: "maladies";
+    singularName: "maladie";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private;
+    link: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::maladie.maladie"
+    >;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
@@ -523,6 +568,7 @@ export interface ApiTabTab extends Struct.CollectionTypeSchema {
 export interface ApiTagTag extends Struct.CollectionTypeSchema {
   collectionName: "tags";
   info: {
+    description: "";
     displayName: "Tags";
     pluralName: "tags";
     singularName: "tag";
@@ -539,6 +585,7 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    type: Schema.Attribute.Enumeration<["robe", "social", "other"]>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private;
@@ -1056,6 +1103,7 @@ declare module "@strapi/strapi" {
       "admin::user": AdminUser;
       "api::cat.cat": ApiCatCat;
       "api::founder.founder": ApiFounderFounder;
+      "api::maladie.maladie": ApiMaladieMaladie;
       "api::navbar-tab.navbar-tab": ApiNavbarTabNavbarTab;
       "api::tab.tab": ApiTabTab;
       "api::tag.tag": ApiTagTag;
