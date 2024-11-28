@@ -27,7 +27,7 @@ const cats: Cat[] = await strapiFetch<Cat[]>({
   ),
 });
 
-const pageTitle = "Nos Chats";
+const pageTitle = "Nos Chats à l'adoption";
 
 // console.log(query);
 // console.log(JSON.stringify(cats, null, 2));
@@ -35,12 +35,12 @@ const pageTitle = "Nos Chats";
 
 <Layout title={pageTitle}>
   <div class="flex flex-col w-full">
-    <h1 class="text-3xl font-bold mx-auto my-6">{pageTitle}</h1>
+    <h1 class="bg-secondary text-3xl font-bold mx-auto my-6 color-pageTitle">{pageTitle}</h1>
 
     <div class="bg-gray-100 flex items-center justify-center">
     
     </div>
-    <div class="flex flex-wrap justify-center custom-cat-card">
+    <div class="flex flex-wrap justify-center">
       {cats.map((cat) => <CatCard cat={cat} />)}
     </div>
   </div>

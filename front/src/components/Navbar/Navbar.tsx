@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ tabs }) => {
   }, []);
   return (
     <nav
-      className={`flex h-16 flex-col bg-orange-300 transition-all duration-300 ${isMenuOpen ? "h-48" : ""}`}
+      className={`flex h-16 flex-col bg-navbar transition-all duration-300 ${isMenuOpen ? "h-48" : ""}`}
     >
       <div className="flex h-16 w-full items-center">
         <a href="/">
