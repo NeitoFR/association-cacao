@@ -11,10 +11,16 @@ const MainTab: React.FC<MainTabProps> = ({ data }) => {
   return (
     <>
       <div
-        // className={`group relative md:flex md:h-full md:cursor-pointer md:select-none md:items-center md:px-4 md:text-lg md:font-normal`}
-        className={`group whitespace-nowrap pl-4 text-lg font-semibold md:relative md:flex md:h-full md:cursor-pointer md:select-none md:items-center md:px-4 md:text-lg md:font-normal`}
+        className={`group whitespace-nowrap pl-4 text-lg font-semibold md:cursor-pointer md:select-none`}
       >
-        {data.name}
+        <div className="flex items-center text-[20px] font-bold">
+          <span>{data.name.toUpperCase()}</span>
+          <img
+            className="h-8 w-8"
+            src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/down_arrow.svg"}
+            alt=""
+          />
+        </div>
         <SubTab data={data.tabs}></SubTab>
       </div>
     </>

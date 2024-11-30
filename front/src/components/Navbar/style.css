@@ -17,14 +17,3 @@
   transform: rotate(90deg);
 }
 /* End of hamburger button CSS section */
-
-/* Start of navbar CSS section */
-.navbar {
-  transition: height 0.3s;
-  @apply h-16;
-}
-.navbar.expanded {
-  transition: height 0.3s;
-  @apply h-48;
-}
-/* End of navbar CSS section */

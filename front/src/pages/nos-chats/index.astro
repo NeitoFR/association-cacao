@@ -1,7 +1,7 @@
 ---
 import strapiFetch from "../../lib/strapi-fetch";
-import type { Cat } from "../../interfaces/cat";
-import type { ContentSection } from "../../interfaces/contentSection";
+import type { Cat } from "../../interfaces/Cat"; 
+import type { ContentSection } from "../../interfaces/ContentSection";
 import Layout from "../../layouts/Layout.astro";
 import CatCard from "../../components/CatCard.astro";
 import qs from "qs";
@@ -10,15 +10,25 @@ const cats: Cat[] = await strapiFetch<Cat[]>({
   endpoint: "cats", // the content type to fetch
   wrappedByKey: "data", // the key to unwrap the response
   query: qs.stringify(
-    {
+    { 
+      // filters: {
+      //   name: 
+      //     {
+      //       $eq: "Antoher"
+      //     }
+      // },
       sort: "name:asc",
-      fields: ["name", "description", "adopted"],
+      fields: ["name", "description", "adopted", "gender", "age", "robe"],
       populate: {
         tags: {
-          fields: ["name"],
+          fields: ["name", "type"],
         },
         photos: {
           fields: ["url"],
+        },
+        socialSkills: "*", // fetch all fields,
+        sicknesses: {
+          fields: ["name", "link"]
         },
       },
     },
@@ -42,13 +52,13 @@ console.log(article);
 <Layout title={pageTitle}>
   <div class="flex flex-col w-full">
     <h1 class="bg-secondary text-3xl font-bold mx-auto my-6 color-pageTitle">{pageTitle}</h1>
-
-    <div class="bg-gray-100 flex items-center justify-center">
-      <div set:html={article.content}></div>
+    <!-- Content section above card browser -->
+    <div class="bg-tertiary flex items-center justify-center mx-8 mb-4 rounded-3xl p-3 ">
+      <div set:html={article.content} class="text-[22px]"></div>
     </div>
-    <div class="flex flex-wrap justify-center">
+    <!-- Cat card browser -->
+    <div class="flex flex-wrap justify-center gap-16">
       {cats.map((cat) => <CatCard cat={cat} />)}
     </div>
   </div>
 </Layout>
-

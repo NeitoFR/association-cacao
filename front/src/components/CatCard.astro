@@ -1,19 +1,28 @@
 ---
-import type { Cat } from "../interfaces/cat";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import type { Cat } from "../interfaces/Cat";
 import CatPhotoSweeper from "./CatPhotoSweeper";
-import Image from "astro/components/Image.astro";
-import search from "../../public/icons/search.svg";
-import more from "../../public/icons/more.svg";
-
 interface Props {
   cat: Cat;
 }
 
 const { cat } = Astro.props;
+
+function getSocialIconName(str: string) {
+  switch (str) {
+    case "yes":
+      return "checked.svg";
+    case "no":
+      return "cross_outline.svg";
+    case "maybe":
+      return "question.png";
+    default:
+      return "question.png";
+  }
+}
+
 console.log(cat);
 ---
-<div class="w-96 py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg">
+<div class="w- py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg">
   <!-- Title -->
   <h1 class="text-center text-3xl font-bold text-stone-600 mb-2">{cat.name}</h1>
 
@@ -26,27 +35,27 @@ console.log(cat);
 
   <!-- Details -->
   <div>
-    <div class="flex py-3 px-6 justify-between w-full font-extrabold text-sm text-stone-600">
-      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Mâle</span></div>
-      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Tigré</span></div>
-      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>2,5 mois</span></div>
+    <div class="flex py-3 px-6 justify-between w-full text-sm text-stone-600">
+      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>{cat.gender ?? "Mâle"}</span></div>
+      <div class="flex items-center "><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>{cat.robe ?? "Inconnu"}</span></div>
+      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>{cat.age ?? "Inconnu"}</span></div>
     </div>
 
     <!-- Description -->
-    <p class="text-sm text-text px-3 bg-tertiary rounded-2xl" style="text-decoration: overline white bg ;">
-      Arrivé chez nous à l'âge de 2 jours, Origan a été biberonné par nos soins jusqu'à son sevrage. Maintenant, c’est un petit chaton plein de vie très joueur et câlin en forte demande d’interactions avec l’humain, un vrai pot de colle!
-    </p>
+     <div class="px-3 py-2 bg-tertiary rounded-2xl ">
+      <div class="text-sm line-clamp-5 min-h-[100px]" set:html={cat?.description != null ? cat.description: "Pas de descrption"}></div>
+     </div>
     <div class="flex py-2">
       <!-- Compatibility -->
       <div class="flex flex-col space-y-1 w-1/2 ">
-        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/checkmark2.svg"} alt="" class="size-4 mr-1"><span>chats</span></div>
-        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/cross.svg"} alt="" class="size-4 mr-1"><span>chiens</span></div>
-        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/question.svg"} alt="" class="size-4 mr-1"><span>enfants</span></div>
+        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/" + getSocialIconName(cat.socialSkills?.isCatFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chats</span></div>
+        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/" + getSocialIconName(cat.socialSkills?.isDogFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chiens</span></div>
+        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/" + getSocialIconName(cat.socialSkills?.isChildrenFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Enfants</span></div>
       </div>
       <!-- Health -->
       <div class="w-1/2 flex flex-col items-center justify-center space-y-1">
-        <span>Maladies</span>
-        <span>N/A</span>
+        <div>Maladies</div>
+        <div>{cat?.sicknesses != null ? cat.sicknesses[0]?.name: "N/A"}</div>
       </div>
     </div>
   </div>

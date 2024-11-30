@@ -20,7 +20,7 @@ const CatPhotoSweeper = ({ photos }) => {
     loadImage();
   }, []);
 
-  const handlePhotoChange = (step) => {
+  const handlePhotoChange = (step: number) => {
     setCurrentPhoto((prev) => {
       const newIndex = prev + step;
       if (newIndex >= 0 && newIndex < photos.length) {
@@ -34,7 +34,7 @@ const CatPhotoSweeper = ({ photos }) => {
     });
   };
 
-  const displayNavigationButton = (direction) => {
+  const displayNavigationButton = (direction: string) => {
     if (photos.length <= 1) return null;
     const isDisabled =
       (direction === "previous" && currentPhoto === 0) ||
@@ -62,7 +62,7 @@ const CatPhotoSweeper = ({ photos }) => {
 
   return (
     <div
-      className="image-container mx-auto rounded-2xl"
+      className="relative h-[400px] w-full bg-cover bg-center transition-[background-image] duration-500 ease-in-out"
       style={{
         backgroundImage: `url(${isLoaded ? imageUrl : import.meta.env.PUBLIC_STRAPI_URL + "/uploads/logo_d.png"})`,
         minHeight: "200px",
