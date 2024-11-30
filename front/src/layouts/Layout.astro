@@ -52,15 +52,38 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-primary">
+  <body class="min-h-screen flex flex-col bg-primary font-glacial">
     <Navbar tabs={navbarTabs} client:load />
-    <main class="flex-grow flex">
+    <main class="flex-grow flex ">
       <slot />
     </main>
     <Footer />
   </body>
 </html>
-<style is:global>
+<style is:global set:html={`
+  @font-face {
+    font-family: 'Glacial Indifference';
+    src: url('${import.meta.env.PUBLIC_STRAPI_URL}/uploads/Glacial_Indifference_Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Glacial Indifference';
+    src: url('${import.meta.env.PUBLIC_STRAPI_URL}/uploads/Glacial_Indifference_Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Glacial Indifference';
+    src: url('${import.meta.env.PUBLIC_STRAPI_URL}/uploads/Glacial_Indifference_Italic.otf') format('opentype');
+    font-weight: 400;
+    font-style: italic;
+  }
+`}>
+</style>
+<style is:global >
   :root {
     --primary-color: #fde5cb;
     --secondary-color: #7e8667;
