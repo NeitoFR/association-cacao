@@ -1,13 +1,14 @@
 ---
 import CatCard from '../../components/CatCard.astro';
 import type { Cat } from '../../interfaces/cat';
+import CatPhotoSweeper from '../../components/CatPhotoSweeper';
 import Layout from '../../layouts/Layout.astro';
 import strapiFetch from '../../lib/strapi-fetch';
 import qs from "qs";
     
 const { catIdentifier } = Astro.params;
 
-const catFiltered = await strapiFetch<Cat>({
+const cat = await strapiFetch<Cat>({
     endpoint: "cats/" + catIdentifier, // the content type to fetch
     wrappedByKey: "data", // the key to unwrap the response
     query: qs.stringify({
@@ -28,12 +29,78 @@ const catFiltered = await strapiFetch<Cat>({
 const queryParams = Astro.url.searchParams.get('toto') || '';
 console.log('queryParams', queryParams);
 
-const pageTitle = 'Detail sur ' + catFiltered.name;
+const pageTitle = 'Detail sur ' + cat.name;
 ---
 
 <Layout title={pageTitle}>
-    <div class="flex flex-col w-full">
-      <h1 class="text-3xl font-bold mx-auto my-6">{pageTitle}</h1>
-      <CatCard cat={catFiltered} />
+    <div class="flex flex-col w-full px-4">
+        <h1 class="bg-secondary text-3xl font-bold mx-auto my-6 color-pageTitle">{pageTitle}</h1>
+
+        <div class="flex items-center justify-between gap-4">
+            <div class="w-1/5 py-2 px-4">
+                <div class="relative overflow-hidden rounded-2xl border-[3px] border-white">
+                    {cat.photos && cat.photos[0] && (
+                        <CatPhotoSweeper photos={cat.photos} client:load />
+                    )}
+                </div>
+            </div>
+
+            <div class="w-1/2 bg-tertiary text-sm text-text p-5 rounded-2xl">
+                <h1 class="font-bold w-full flex items-center">INFORMATIONS GÉNÉRALES</h1>
+
+                <div class="flex py-3 px-6 justify-between w-full font-extrabold text-sm text-stone-600">
+                    <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Mâle</span></div>
+                    <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Tigré</span></div>
+                    <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>2,5 mois</span></div>
+                    <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>Européen</span></div>
+                </div>
+
+                <div class="flex py-2">
+                    <!-- Compatibility -->
+                    <div class="flex flex-col space-y-1 w-1/2 ">
+                        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/checkmark2.svg"} alt="" class="size-4 mr-1"><span>chats</span></div>
+                        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/cross.svg"} alt="" class="size-4 mr-1"><span>chiens</span></div>
+                        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/question.svg"} alt="" class="size-4 mr-1"><span>enfants</span></div>
+                    </div>
+                    <div class="flex flex-col space-y-1 w-1/2 ">
+                        <div>vacciné pucé stérilisé</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full bg-tertiary text-sm text-text p-5 mt-5 rounded-2xl">
+            <h4 class="font-bold">HISTOIRE ET PARCOURS</h4>
+
+            <p>
+                Origan a été trouvé abandonné dans la rue à seulement 2 jours avec ses deux frères et soeurs. Seul survivant de sa porté, ce petit chat est un vrai battant. Nous l'avons biberonné jour et nuit jusqu’à son sevrage qui fut tardif. C'est maintenant un petit chaton complètement autonome et plein de vie.
+            </p>
+        </div>
+
+        <div class="w-full bg-tertiary text-sm text-text p-5 mt-5 rounded-2xl">
+            <h4 class="font-bold">CARACTÈRE ET BESOINS</h4>
+
+            <p>
+                Origan adore jouer et se dépenser! Il court partout, grimpe partout et joue avec tout ce qu'il trouve. Il arrive parfois qu'il y ait un peu de casse, mais sa petite bouille nous fait vite tout oublier. Un partenaire de jeu est indispensable, il est inséparable de Mayo avec qui il joue tout le temps. Nous privilégions donc une adoption commune. Il est aussi en forte demande d'interactions humaine, un vrai pot de colle qui nous suit partout et qui ne demande qu'à se faire câliner et à ronronner. Il passe ses temps de repos à dormir sur nous. Il a donc besoin d'une famille assez présente à la maison et qui pourra lui consacrer du temps afin de répondre à ses besoins.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <div class="w-1/2 text-sm text-text p-5 mt-5 rounded-2xl bg-tertiary">
+                <h4 class="font-bold">MOT DE LA FAMILLE D'ACCUEIL</h4>
+
+                <p>
+                    “Origan pourrait être renommé SpiderCat car il adore grimper partout! Et quand il ne grimpe pas, il passe son temps à ronron  sur nos genoux.”
+                </p>
+            </div>
+
+            <div class="w-1/2 bg-tertiary text-sm text-text p-5 mt-5 rounded-2xl">
+                <h4 class="font-bold">MALADIES ET SOINS</h4>
+
+                <p>
+                    Pas de maladies déclarées ou de soins particulier à administrer.
+                </p>
+            </div>
+        </div>
     </div>
 </Layout>
