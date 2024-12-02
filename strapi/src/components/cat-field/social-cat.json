@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_cat_field_social_cats",
+  "info": {
+    "displayName": "SocialCat",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "isDogFriendly": {
+      "type": "enumeration",
+      "enum": ["yes", "no", "maybe"],
+      "default": "maybe"
+    },
+    "isChildrenFriendly": {
+      "type": "enumeration",
+      "enum": ["yes", "no", "maybe"],
+      "default": "maybe"
+    },
+    "isCatFriendly": {
+      "type": "enumeration",
+      "enum": ["yes", "no", "maybe"],
+      "default": "maybe"
+    }
+  }
+}

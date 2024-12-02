@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "robes",
+  "info": {
+    "singularName": "robe",
+    "pluralName": "robes",
+    "displayName": "Robe",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "color": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    }
+  }
+}
