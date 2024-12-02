@@ -8,17 +8,29 @@
   "attributes": {
     "isDogFriendly": {
       "type": "enumeration",
-      "enum": ["yes", "no", "maybe"],
+      "enum": [
+        "yes",
+        "no",
+        "maybe"
+      ],
       "default": "maybe"
     },
     "isChildrenFriendly": {
       "type": "enumeration",
-      "enum": ["yes", "no", "maybe"],
+      "enum": [
+        "yes",
+        "no",
+        "maybe"
+      ],
       "default": "maybe"
     },
     "isCatFriendly": {
       "type": "enumeration",
-      "enum": ["yes", "no", "maybe"],
+      "enum": [
+        "yes",
+        "no",
+        "maybe"
+      ],
       "default": "maybe"
     }
   }

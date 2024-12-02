@@ -20,7 +20,12 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "adopted": {
       "type": "boolean",
@@ -38,7 +43,10 @@
     },
     "gender": {
       "type": "enumeration",
-      "enum": ["Mâle", "Femelle"],
+      "enum": [
+        "Mâle",
+        "Femelle"
+      ],
       "required": true,
       "default": "Mâle"
     },

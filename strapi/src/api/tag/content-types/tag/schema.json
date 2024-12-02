@@ -17,7 +17,11 @@
     },
     "type": {
       "type": "enumeration",
-      "enum": ["robe", "social", "other"]
+      "enum": [
+        "robe",
+        "social",
+        "other"
+      ]
     }
   }
 }
