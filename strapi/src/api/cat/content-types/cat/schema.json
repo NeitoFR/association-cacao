@@ -13,42 +13,55 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "photos": {
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "description": {
-      "type": "blocks"
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "adopted": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "tags": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::tag.tag"
     },
-    "maladies": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::maladie.maladie"
+    "socialSkills": {
+      "type": "component",
+      "repeatable": false,
+      "component": "cat-field.social-cat"
     },
-    "richdesc": {
+    "gender": {
+      "type": "enumeration",
+      "enum": ["Mâle", "Femelle"],
+      "required": true,
+      "default": "Mâle"
+    },
+    "age": {
+      "type": "string",
+      "default": "Inconnu"
+    },
+    "robe": {
+      "type": "string",
+      "default": "Inconnu"
+    },
+    "description": {
       "type": "customField",
       "options": {
         "output": "HTML",
         "preset": "rich"
       },
       "customField": "plugin::ckeditor.CKEditor"
+    },
+    "sicknesses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::sickness.sickness"
     }
   }
 }

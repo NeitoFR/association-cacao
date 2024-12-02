@@ -4,7 +4,7 @@
   "info": {
     "singularName": "tag",
     "pluralName": "tags",
-    "displayName": "Tags",
+    "displayName": "Cat tags",
     "description": ""
   },
   "options": {
@@ -17,11 +17,7 @@
     },
     "type": {
       "type": "enumeration",
-      "enum": [
-        "robe",
-        "social",
-        "other"
-      ]
+      "enum": ["robe", "social", "other"]
     }
   }
 }
