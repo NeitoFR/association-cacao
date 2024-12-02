@@ -2,8 +2,6 @@
  * adoption-page controller
  */
 
-import { factories } from "@strapi/strapi";
+import { factories } from '@strapi/strapi'
 
-export default factories.createCoreController(
-  "api::adoption-page.adoption-page"
-);
+export default factories.createCoreController('api::adoption-page.adoption-page');
