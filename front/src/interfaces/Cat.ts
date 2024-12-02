@@ -29,4 +29,4 @@ interface Cat {
   sicknesses?: Sickness[] | null;
 }
 
-export type { Cat };
+export type { Cat, CatPhoto };

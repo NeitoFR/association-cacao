@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
+import type { CatPhoto } from "../interfaces/Cat";
 import styles from "./CatPhotoSweeper.module.css";
 
-const CatPhotoSweeper = ({ photos }) => {
+interface CatPhotoSweeperProps {
+  photos: CatPhoto[];
+}
+
+const CatPhotoSweeper = ({ photos }: CatPhotoSweeperProps) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -9,7 +14,7 @@ const CatPhotoSweeper = ({ photos }) => {
   const loadImage = (index = 0) => {
     setIsLoaded(false);
     const img = new Image();
-    img.src = `${import.meta.env.PUBLIC_STRAPI_URL}${photos[index].url}`;
+    img.src = `${import.meta.env.PUBLIC_STRAPI_URL}${photos[index]?.url}`;
     img.onload = () => {
       setImageUrl(img.src);
       setIsLoaded(true);
@@ -18,7 +23,7 @@ const CatPhotoSweeper = ({ photos }) => {
 
   useEffect(() => {
     loadImage();
-  }, []);
+  }, [photos]);
 
   const handlePhotoChange = (step: number) => {
     setCurrentPhoto((prev) => {
