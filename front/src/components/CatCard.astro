@@ -55,7 +55,7 @@ console.log(cat);
       <!-- Health -->
       <div class="w-1/2 flex flex-col items-center justify-center space-y-1">
         <div>Maladies</div>
-        <div>{cat?.sicknesses != null ? cat.sicknesses[0]?.name: "N/A"}</div>
+        <div>{cat?.sicknesses?.length === 0 ? "N/A" : cat.sicknesses[0]?.name}</div>
       </div>
     </div>
   </div>

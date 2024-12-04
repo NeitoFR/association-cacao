@@ -1,3 +1,12 @@
+# Transfer from dev
+
+Pushing dev to prod doesn't work (dunno why)
+Pulling dev from prod works though
+
+```sh
+npx strapi transfer --from https://dev.strapi.neitosden.fr/admin --from-token XXX --exclude files
+```
+
 # 🚀 Getting started with Strapi
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
