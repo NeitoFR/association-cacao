@@ -10,21 +10,23 @@ const { cat } = Astro.props;
 function getSocialIconName(str: string) {
   switch (str) {
     case "yes":
-      return "checked.svg";
+      return "check_yes.png";
     case "no":
-      return "cross_outline.svg";
+      return "cross_no.png";
     case "maybe":
-      return "question.png";
+      return "question_mark.png";
     default:
-      return "question.png";
+      return "question_mark.png";
   }
 }
 
-console.log(cat);
+// console.log(cat);
 ---
-<div class="w-96 py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg">
+<>
+<cat-card data-catid={cat.documentId} class="w-96 py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg">
+  
   <!-- Title -->
-  <h1 class="text-center text-3xl font-bold text-stone-600 mb-2">{cat.name}</h1>
+  <h1 class="text-center text-3xl font-bold text-stone-600 mb-2 cursor-pointer underline">{cat.name}</h1>
 
   <!-- Image -->
   <div class="relative overflow-hidden rounded-2xl border-[3px] border-white">
@@ -36,9 +38,9 @@ console.log(cat);
   <!-- Details -->
   <div>
     <div class="flex py-3 px-6 justify-between w-full text-sm text-stone-600">
-      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>{cat.gender ?? "Mâle"}</span></div>
-      <div class="flex items-center "><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>{cat.robe ?? "Inconnu"}</span></div>
-      <div class="flex items-center"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/paw_icon.svg" } class="-rotate-[25deg] size-8 mr-2"><span>{cat.age ?? "Inconnu"}</span></div>
+      <div class="flex items-center"><img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2"><span>{cat.gender ?? "Mâle"}</span></div>
+      <div class="flex items-center "><img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2"><span>{cat.robe ?? "Inconnu"}</span></div>
+      <div class="flex items-center"><img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2"><span>{cat.age ?? "Inconnu"}</span></div>
     </div>
 
     <!-- Description -->
@@ -48,15 +50,29 @@ console.log(cat);
     <div class="flex py-2">
       <!-- Compatibility -->
       <div class="flex flex-col space-y-1 w-1/2 ">
-        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/" + getSocialIconName(cat.socialSkills?.isCatFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chats</span></div>
-        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/" + getSocialIconName(cat.socialSkills?.isDogFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chiens</span></div>
-        <div class="flex items-center ml-5"><img src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/" + getSocialIconName(cat.socialSkills?.isChildrenFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Enfants</span></div>
+        <div class="flex items-center ml-5"><img src={"/icons/" + getSocialIconName(cat.socialSkills?.isCatFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chats</span></div>
+        <div class="flex items-center ml-5"><img src={"/icons/" + getSocialIconName(cat.socialSkills?.isDogFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chiens</span></div>
+        <div class="flex items-center ml-5"><img src={"/icons/" + getSocialIconName(cat.socialSkills?.isChildrenFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Enfants</span></div>
       </div>
       <!-- Health -->
       <div class="w-1/2 flex flex-col items-center justify-center space-y-1">
         <div>Maladies</div>
-        <div>{cat?.sicknesses != null ? cat.sicknesses[0]?.name: "N/A"}</div>
+        <div>{cat?.sicknesses?.length === 0 ? "N/A" : cat.sicknesses[0]?.name}</div>
       </div>
     </div>
   </div>
-</div>
+</cat-card>
+<script>
+  class CatCard extends HTMLElement {
+    connectedCallback() {
+      const catId = this.dataset.catid;
+      console.log(catId);
+      this.querySelector('h1')?.addEventListener('click', () => {
+        window.location.href = `/nos-chats/${catId}`;
+      });
+    }
+  }
+
+  customElements.define('cat-card', CatCard);
+</script>
+</>

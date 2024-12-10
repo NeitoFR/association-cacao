@@ -11,6 +11,42 @@ interface Props {
 
 const { title } = Astro.props;
 
+// const navbarTabs: NavbarTab[] = [{
+//   name: "Accueil", 
+//   tabs: [ {
+//     name: "Accueil",
+//     href: "/"
+//   }, 
+//   {
+//     name: "Nos Chats",
+//     href: "/"
+//   }
+//   ]
+// },
+// {
+//   name: "Nos Chats", 
+//   tabs: [ {
+//     name: "A l'adoption",
+//     href: "/"
+//   }, 
+//   {
+//     name: "Les adoptés",
+//     href: "/"
+//   }
+//   ]
+// },
+// {
+//   name: "Nous supporter", 
+//   tabs: [ {
+//     name: "Dons",
+//     href: "/"
+//   }, 
+//   {
+//     name: "Comment adopter ?",
+//     href: "/"
+//   }
+//   ]
+// }]
 const navbarTabs: NavbarTab[] = await strapiFetch({
   endpoint: "navbar-tabs",
   wrappedByKey: "data",
@@ -36,10 +72,11 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
       },
     },
     {
-      encodeValuesOnly: true, // prettify URL
+      encodeValuesOnly: true
     }
   ),
 });
+// console.log(navbarTabs);
 ---
 
 <!doctype html>
@@ -48,7 +85,7 @@ const navbarTabs: NavbarTab[] = await strapiFetch({
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>

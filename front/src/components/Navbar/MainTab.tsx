@@ -13,7 +13,7 @@ const MainTab: React.FC<MainTabProps> = ({ data }) => {
       <div
         className={`group whitespace-nowrap pl-4 text-lg font-semibold md:cursor-pointer md:select-none`}
       >
-        <div className="flex items-center text-[20px] font-bold">
+        <div className="flex items-center text-[16px] font-bold lg:text-[20px]">
           <span>{data.name.toUpperCase()}</span>
           <img
             className="h-8 w-8"
