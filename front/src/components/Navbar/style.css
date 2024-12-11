@@ -8,7 +8,6 @@
 .hamburger.active span:nth-child(odd) {
   opacity: 0;
 }
-
 .hamburger.active span:nth-child(2) {
   transform: rotate(-45deg);
 }
@@ -17,3 +16,8 @@
   transform: rotate(90deg);
 }
 /* End of hamburger button CSS section */
+
+/* CSS for donation button */
+.dons {
+  background-image: url("/icons/coeur_dons.png");
+}
