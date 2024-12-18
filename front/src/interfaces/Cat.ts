@@ -19,7 +19,6 @@ interface Sickness {
 interface Cat {
   documentId: string;
   name: string;
-  description?: BlocksContent | null;
   adopted: boolean;
   photos?: CatPhoto[] | null;
   socialSkills: SocialSkills;
@@ -27,6 +26,10 @@ interface Cat {
   age: string;
   robe: string;
   sicknesses?: Sickness[] | null;
+  fosterfamilyword?: string | null;
+  sicknessandcare?: string | null;
+  history?: string | null;
+  temperandneed?: string | null;
 }
 
 export type { Cat, CatPhoto };

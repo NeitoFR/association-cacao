@@ -3,7 +3,7 @@ import strapiFetch from "../../lib/strapi-fetch";
 import type { Cat } from "../../interfaces/Cat"; 
 import type { ContentSection } from "../../interfaces/ContentSection";
 import Layout from "../../layouts/Layout.astro";
-import CatCard from "../../components/CatCard.astro";
+import CatCard from "../../components/CatCard/CatCard.astro";
 import qs from "qs";
 
 const cats: Cat[] = await strapiFetch<Cat[]>({

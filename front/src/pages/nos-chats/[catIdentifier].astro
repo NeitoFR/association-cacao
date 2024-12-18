@@ -1,32 +1,91 @@
 ---
-import type { Cat } from '../../interfaces/Cat';
-import CatPhotoSweeper from '../../components/CatPhotoSweeper';
-import Layout from '../../layouts/Layout.astro';
-import strapiFetch from '../../lib/strapi-fetch';
+import type { Cat } from "../../interfaces/Cat";
+import CatPhotoSweeper from "../../components/PhotoSweeper/PhotoSweeper";
+import Layout from "../../layouts/Layout.astro";
+import strapiFetch from "../../lib/strapi-fetch";
 import qs from "qs";
-    
+import Accordion from "../../components/Accordion/Accordion";
+
 const { catIdentifier } = Astro.params;
 
 const cat = await strapiFetch<Cat>({
-    endpoint: "cats/" + catIdentifier, // the content type to fetch
-    wrappedByKey: "data", // the key to unwrap the response
-    query: qs.stringify({
-        populate: {
-            tags: {
-                fields: ["name"],
-            },
-            photos: {
-                fields: ["url"],
-            },
-        }
-    }, {
-        encodeValuesOnly: true, // prettify URL
-    })
+  endpoint: "cats/" + catIdentifier,
+  wrappedByKey: "data",
+  query: qs.stringify(
+    {
+      populate: {
+        tags: {
+          fields: ["name"],
+        },
+        photos: {
+          fields: ["url"],
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true, // prettify URL
+    }
+  ),
 });
 
-const pageTitle = 'A propos de ' + cat.name;
+// console.log(cat);
+
+const pageTitle = "A propos de " + cat.name;
 ---
 
 <Layout title={pageTitle}>
-
+  <div class="flex flex-col w-full lg:max-w-[1024px] mx-auto">
+    <!-- Section Title -->
+    <h1 class="bg-secondary text-3xl font-bold mx-auto my-6 text-center">
+      Nos chats à l'adoption
+    </h1>
+    <!-- Cat Name -->
+    <h1 class="text-2xl cfont-bold mx-auto font-dmDisplay">{cat.name}</h1>
+    <!-- Main Section-->
+    <div class="flex flex-col p-4 md:p-8 gap-4">
+      <div class="flex flex-col md:flex-row gap-4">
+        {
+          cat.photos && cat.photos[0] && (
+            <CatPhotoSweeper
+              photos={cat.photos}
+              className="rounded-2xl border-[3px] border-white w-full md:w-1/2"
+              client:load
+            />
+          )
+        }
+        <div class="w-full md:w-1/2 border-[3px] rounded-2xl bg-white">
+          <h3 class="w-full text-center text-[24px] font-bold">
+            INFORMATIONS GENERALES
+          </h3>
+        </div>
+      </div>
+      <Accordion
+        title="HISTOIRE ET PARCOURS"
+        content={cat.history}
+        className="w-full"
+        client:load
+      />
+      <Accordion
+        title="CARACTÈRE ET BESOINS"
+        content={cat.temperandneed}
+        className="w-full"
+        client:load
+      />
+      <div class="w-full"></div>
+      <div class="flex flex-col md:flex-row gap-4">
+        <Accordion
+          title="MOT DE LA FAMILLE D’ACCUEIL"
+          content={cat.fosterfamilyword}
+          className="w-full md:w-1/2"
+          client:load
+        />
+        <Accordion
+          title="MALADIES ET SOINS"
+          content={cat.sicknessandcare}
+          className="w-full md:w-1/2"
+          client:load
+        />
+      </div>
+    </div>
+  </div>
 </Layout>

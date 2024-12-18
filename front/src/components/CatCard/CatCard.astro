@@ -1,6 +1,6 @@
 ---
-import type { Cat } from "../interfaces/Cat";
-import CatPhotoSweeper from "./CatPhotoSweeper";
+import type { Cat } from "../../interfaces/Cat";
+import PhotoSweeper from "../PhotoSweeper/PhotoSweeper";
 interface Props {
   cat: Cat;
 }
@@ -29,11 +29,9 @@ function getSocialIconName(str: string) {
   <h1 class="text-center text-3xl font-bold text-stone-600 mb-2 cursor-pointer underline">{cat.name}</h1>
 
   <!-- Image -->
-  <div class="relative overflow-hidden rounded-2xl border-[3px] border-white">
     {cat.photos && cat.photos[0] && (
-      <CatPhotoSweeper photos={cat.photos} client:load />
+      <PhotoSweeper photos={cat.photos} className="overflow-hidden rounded-2xl border-[3px] border-white" client:load />
     )}
-  </div>
 
   <!-- Details -->
   <div>

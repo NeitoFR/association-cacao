@@ -16,8 +16,8 @@ const MainTab: React.FC<MainTabProps> = ({ data }) => {
         <div className="flex items-center text-[16px] font-bold lg:text-[20px]">
           <span>{data.name.toUpperCase()}</span>
           <img
-            className="h-8 w-8"
-            src={import.meta.env.PUBLIC_STRAPI_URL + "/uploads/down_arrow.svg"}
+            className="ml-2 size-3 lg:size-4"
+            src="/icons/down_arrow.svg"
             alt=""
           />
         </div>
