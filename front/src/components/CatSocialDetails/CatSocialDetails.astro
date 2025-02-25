@@ -1,0 +1,49 @@
+---
+import type { CatSocialSkills } from "../../interfaces/Cat";
+
+interface Props {
+  socialSkills: CatSocialSkills;
+}
+
+const { socialSkills } = Astro.props;
+
+function getSocialIconName(str: string) {
+  switch (str) {
+    case "yes":
+      return "check_yes.png";
+    case "no":
+      return "cross_no.png";
+    case "maybe":
+      return "question_mark.png";
+    default:
+      return "question_mark.png";
+  }
+}
+
+console.log("aie aie aie aie" + socialSkills);
+---
+
+<div class="flex flex-col space-y-1 w-1/2">
+  <div class="flex items-center ml-5">
+    <img
+      src={"/icons/" + getSocialIconName(socialSkills.isCatFriendly ?? "maybe")}
+      alt=""
+      class="size-4 mr-1"
+    /><span>Chats</span>
+  </div>
+  <div class="flex items-center ml-5">
+    <img
+      src={"/icons/" + getSocialIconName(socialSkills.isDogFriendly ?? "maybe")}
+      alt=""
+      class="size-4 mr-1"
+    /><span>Chiens</span>
+  </div>
+  <div class="flex items-center ml-5">
+    <img
+      src={"/icons/" +
+        getSocialIconName(socialSkills.isChildrenFriendly ?? "maybe")}
+      alt=""
+      class="size-4 mr-1"
+    /><span>Enfants</span>
+  </div>
+</div>

@@ -58,7 +58,12 @@
       "type": "string",
       "default": "Inconnu"
     },
-    "description": {
+    "sicknesses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::sickness.sickness"
+    },
+    "fosterfamilyword": {
       "type": "customField",
       "options": {
         "output": "HTML",
@@ -66,10 +71,29 @@
       },
       "customField": "plugin::ckeditor.CKEditor"
     },
-    "sicknesses": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::sickness.sickness"
+    "sicknessandcare": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "rich"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    },
+    "history": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "rich"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    },
+    "temperandneed": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "rich"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
     }
   }
 }

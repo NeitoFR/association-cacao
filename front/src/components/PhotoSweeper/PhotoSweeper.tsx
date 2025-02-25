@@ -7,7 +7,7 @@ interface PhotoSweeperProps {
 }
 const PhotoSweeper = (props: PhotoSweeperProps) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  console.log("photos", props.photos);
+  // console.log("photos", props.photos);
 
   const handlePreviousClick = () => {
     if (currentPhoto > 0) {

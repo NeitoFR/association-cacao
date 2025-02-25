@@ -5,30 +5,42 @@ import Layout from "../../layouts/Layout.astro";
 import strapiFetch from "../../lib/strapi-fetch";
 import qs from "qs";
 import Accordion from "../../components/Accordion/Accordion";
+import CatSocialDetails from "../../components/CatSocialDetails/CatSocialDetails.astro";
 
 const { catIdentifier } = Astro.params;
 
 const cat = await strapiFetch<Cat>({
   endpoint: "cats/" + catIdentifier,
   wrappedByKey: "data",
-  query: qs.stringify(
-    {
-      populate: {
-        tags: {
-          fields: ["name"],
-        },
-        photos: {
-          fields: ["url"],
-        },
+  query: qs.stringify({
+    fields: [
+      "name",
+      "adopted",
+      "gender",
+      "age",
+      "robe",
+      "species",
+      "history",
+      "fosterfamilyword",
+      "sicknessandcare",
+      "temperandneed",
+    ],
+    populate: {
+      tags: {
+        fields: ["name", "type"],
+      },
+      photos: {
+        fields: ["url"],
+      },
+      socialSkills: "*", // fetch all fields,
+      sicknesses: {
+        fields: ["name", "link"],
       },
     },
-    {
-      encodeValuesOnly: true, // prettify URL
-    }
-  ),
+  }),
 });
 
-// console.log(cat);
+console.log("hey", cat);
 
 const pageTitle = "A propos de " + cat.name;
 ---
@@ -42,7 +54,7 @@ const pageTitle = "A propos de " + cat.name;
     <!-- Cat Name -->
     <h1 class="text-2xl cfont-bold mx-auto font-dmDisplay">{cat.name}</h1>
     <!-- Main Section-->
-    <div class="flex flex-col p-4 md:p-8 gap-4">
+    <div class="flex flex-col p-4 md:p-8 gap-4 font-dmDisplay">
       <div class="flex flex-col md:flex-row gap-4">
         {
           cat.photos && cat.photos[0] && (
@@ -53,39 +65,74 @@ const pageTitle = "A propos de " + cat.name;
             />
           )
         }
-        <div class="w-full md:w-1/2 border-[3px] rounded-2xl bg-white">
+        <div class="w-full md:w-1/2 rounded-2xl bg-white p-4">
           <h3 class="w-full text-center text-[24px] font-bold">
             INFORMATIONS GENERALES
           </h3>
+          <div class="flex flex-col border-black h-fit">
+            <div class="flex border-violet-600 w-full">
+              <div class="flex flex-col w-full">
+                <div class="flex items-center gap-2 p-1 border-black">
+                  <img src="/icons/paw.png" alt="" class="size-5" />
+                  <p>
+                    {cat.gender}
+                  </p>
+                </div>
+                <div class="flex items-center gap-2 p-1 border-black">
+                  <img src="/icons/paw.png" alt="" class="size-5" />
+                  <p>
+                    {cat.species}
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col w-full">
+                <div class="flex items-center gap-2 p-1 border-black">
+                  <img src="/icons/paw.png" alt="" class="size-5" />
+                  <p>
+                    {cat.robe}
+                  </p>
+                </div>
+                <div class="flex items-center gap-2 p-1 border-black">
+                  <img src="/icons/paw.png" alt="" class="size-5" />
+                  <p>
+                    {cat.age} mois
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <CatSocialDetails socialSkills={cat.socialSkills} />
+        <Accordion
+          title="HISTOIRE ET PARCOURS"
+          content={cat.history}
+          className="w-full"
+          client:load
+        />
+        <Accordion
+          title="CARACTÈRE ET BESOINS"
+          content={cat.temperandneed}
+          className="w-full"
+          client:load
+        />
+        <div class="flex flex-col md:flex-row gap-4">
+          <Accordion
+            title="MOT DE LA FAMILLE D’ACCUEIL"
+            content={cat.fosterfamilyword}
+            className="w-full rounded-md md:w-1/2 italic"
+            client:load
+          />
+          <Accordion
+            title="MALADIES ET SOINS"
+            content={cat.sicknessandcare
+              ? cat.sicknessandcare
+              : "Pas de maladies déclarées ou de soins particulier à administrer."}
+            className="w-full md:w-1/2"
+            client:load
+          />
         </div>
       </div>
-      <Accordion
-        title="HISTOIRE ET PARCOURS"
-        content={cat.history}
-        className="w-full"
-        client:load
-      />
-      <Accordion
-        title="CARACTÈRE ET BESOINS"
-        content={cat.temperandneed}
-        className="w-full"
-        client:load
-      />
-      <div class="w-full"></div>
-      <div class="flex flex-col md:flex-row gap-4">
-        <Accordion
-          title="MOT DE LA FAMILLE D’ACCUEIL"
-          content={cat.fosterfamilyword}
-          className="w-full md:w-1/2"
-          client:load
-        />
-        <Accordion
-          title="MALADIES ET SOINS"
-          content={cat.sicknessandcare}
-          className="w-full md:w-1/2"
-          client:load
-        />
-      </div>
+      <div class="text-center">Boutton d'adoption</div>
     </div>
   </div>
 </Layout>

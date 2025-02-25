@@ -1,5 +1,6 @@
 ---
 import type { Cat } from "../../interfaces/Cat";
+import CatSocialDetails from "../CatSocialDetails/CatSocialDetails.astro";
 import PhotoSweeper from "../PhotoSweeper/PhotoSweeper";
 interface Props {
   cat: Cat;
@@ -22,55 +23,79 @@ function getSocialIconName(str: string) {
 
 // console.log(cat);
 ---
+
 <>
-<cat-card data-catid={cat.documentId} class="w-96 py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg">
-  
-  <!-- Title -->
-  <h1 class="text-center text-3xl font-bold text-stone-600 mb-2 cursor-pointer underline">{cat.name}</h1>
+  <cat-card
+    data-catid={cat.documentId}
+    class="w-96 py-2 px-4 rounded-3xl border-[10px] border-catCardBorder bg-catCardBg"
+  >
+    <!-- Title -->
+    <h1
+      class="text-center text-3xl font-bold text-stone-600 mb-2 cursor-pointer underline"
+    >
+      {cat.name}
+    </h1>
 
-  <!-- Image -->
-    {cat.photos && cat.photos[0] && (
-      <PhotoSweeper photos={cat.photos} className="overflow-hidden rounded-2xl border-[3px] border-white" client:load />
-    )}
-
-  <!-- Details -->
-  <div>
-    <div class="flex py-3 px-6 justify-between w-full text-sm text-stone-600">
-      <div class="flex items-center"><img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2"><span>{cat.gender ?? "Mâle"}</span></div>
-      <div class="flex items-center "><img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2"><span>{cat.robe ?? "Inconnu"}</span></div>
-      <div class="flex items-center"><img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2"><span>{cat.age ?? "Inconnu"}</span></div>
-    </div>
-
-    <!-- Description -->
-     <div class="px-3 py-2 bg-tertiary rounded-2xl ">
-      <div class="text-sm line-clamp-5 min-h-[100px]" set:html={cat?.description != null ? cat.description: "Pas de descrption"}></div>
-     </div>
-    <div class="flex py-2">
-      <!-- Compatibility -->
-      <div class="flex flex-col space-y-1 w-1/2 ">
-        <div class="flex items-center ml-5"><img src={"/icons/" + getSocialIconName(cat.socialSkills?.isCatFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chats</span></div>
-        <div class="flex items-center ml-5"><img src={"/icons/" + getSocialIconName(cat.socialSkills?.isDogFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Chiens</span></div>
-        <div class="flex items-center ml-5"><img src={"/icons/" + getSocialIconName(cat.socialSkills?.isChildrenFriendly ?? "maybe")} alt="" class="size-4 mr-1"><span>Enfants</span></div>
-      </div>
-      <!-- Health -->
-      <div class="w-1/2 flex flex-col items-center justify-center space-y-1">
-        <div>Maladies</div>
-        <div>{cat.sicknesses?.[0]?.name ?? "N/A"}</div>
-      </div>
-    </div>
-  </div>
-</cat-card>
-<script>
-  class CatCard extends HTMLElement {
-    connectedCallback() {
-      const catId = this.dataset.catid;
-      console.log(catId);
-      this.querySelector('h1')?.addEventListener('click', () => {
-        window.location.href = `/nos-chats/${catId}`;
-      });
+    <!-- Image -->
+    {
+      cat.photos && cat.photos[0] && (
+        <PhotoSweeper
+          photos={cat.photos}
+          className="overflow-hidden rounded-2xl border-[3px] border-white"
+          client:load
+        />
+      )
     }
-  }
 
-  customElements.define('cat-card', CatCard);
-</script>
+    <!-- Details -->
+    <div>
+      <div class="flex py-3 px-6 justify-between w-full text-sm text-stone-600">
+        <div class="flex items-center">
+          <img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2" /><span
+            >{cat.gender ?? "Mâle"}</span
+          >
+        </div>
+        <div class="flex items-center">
+          <img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2" /><span
+            >{cat.robe ?? "Inconnu"}</span
+          >
+        </div>
+        <div class="flex items-center">
+          <img src="/icons/paw.png" class="-rotate-[25deg] size-8 mr-2" /><span
+            >{cat.age ?? "Inconnu"}</span
+          >
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="px-3 py-2 bg-tertiary rounded-2xl">
+        <div
+          class="text-sm line-clamp-5 min-h-[100px]"
+          set:html={cat?.history != null ? cat.history : "Pas de descrption"}
+        />
+      </div>
+      <div class="flex py-2">
+        <!-- Compatibility -->
+        <!-- <CatSocialDetails socialSkills={cat.socialSkills} /> -->
+        <!-- Health -->
+        <div class="w-1/2 flex flex-col items-center justify-center space-y-1">
+          <div>Maladies</div>
+          <div>{cat.sicknesses?.[0]?.name ?? "N/A"}</div>
+        </div>
+      </div>
+    </div>
+  </cat-card>
+  <script>
+    class CatCard extends HTMLElement {
+      connectedCallback() {
+        const catId = this.dataset.catid;
+        console.log(catId);
+        this.querySelector("h1")?.addEventListener("click", () => {
+          window.location.href = `/nos-chats/${catId}`;
+        });
+      }
+    }
+
+    customElements.define("cat-card", CatCard);
+  </script>
 </>

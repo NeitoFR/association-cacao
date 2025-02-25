@@ -430,7 +430,7 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText &
+    fosterfamilyword: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor.CKEditor',
         {
@@ -441,6 +441,14 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     gender: Schema.Attribute.Enumeration<['M\u00E2le', 'Femelle']> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'M\u00E2le'>;
+    history: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'rich';
+        }
+      >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::cat.cat'> &
       Schema.Attribute.Private;
@@ -451,12 +459,28 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     robe: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Inconnu'>;
+    sicknessandcare: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'rich';
+        }
+      >;
     sicknesses: Schema.Attribute.Relation<
       'oneToMany',
       'api::sickness.sickness'
     >;
     socialSkills: Schema.Attribute.Component<'cat-field.social-cat', false>;
     tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
+    temperandneed: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor.CKEditor',
+        {
+          output: 'HTML';
+          preset: 'rich';
+        }
+      >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
