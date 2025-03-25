@@ -472,6 +472,7 @@ export interface ApiCatCat extends Struct.CollectionTypeSchema {
       'api::sickness.sickness'
     >;
     socialSkills: Schema.Attribute.Component<'cat-field.social-cat', false>;
+    species: Schema.Attribute.String;
     tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
     temperandneed: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<

@@ -94,6 +94,9 @@
         "preset": "rich"
       },
       "customField": "plugin::ckeditor.CKEditor"
+    },
+    "species": {
+      "type": "string"
     }
   }
 }

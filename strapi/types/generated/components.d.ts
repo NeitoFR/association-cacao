@@ -16,23 +16,10 @@ export interface CatFieldSocialCat extends Struct.ComponentSchema {
   };
 }
 
-export interface TabsTabs extends Struct.ComponentSchema {
-  collectionName: 'components_tabs_tabs';
-  info: {
-    displayName: 'Tabs';
-    icon: 'bulletList';
-  };
-  attributes: {
-    href: Schema.Attribute.String;
-    name: Schema.Attribute.String;
-  };
-}
-
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'cat-field.social-cat': CatFieldSocialCat;
-      'tabs.tabs': TabsTabs;
     }
   }
 }
