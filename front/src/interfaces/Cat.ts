@@ -5,7 +5,7 @@ interface CatPhoto {
   alt: string;
 }
 
-interface SocialSkills {
+interface CatSocialSkills {
   isDogFriendly: string;
   isChildrenFriendly: string;
   isCatFriendly: string;
@@ -19,14 +19,18 @@ interface Sickness {
 interface Cat {
   documentId: string;
   name: string;
-  description?: BlocksContent | null;
   adopted: boolean;
   photos?: CatPhoto[] | null;
-  socialSkills: SocialSkills;
+  socialSkills: CatSocialSkills;
   gender: string;
   age: string;
   robe: string;
+  species?: string | null;
   sicknesses?: Sickness[] | null;
+  fosterfamilyword?: string | null;
+  sicknessandcare?: string | null;
+  history?: string | null;
+  temperandneed?: string | null;
 }
 
-export type { Cat, CatPhoto };
+export type { Cat, CatPhoto, CatSocialSkills };

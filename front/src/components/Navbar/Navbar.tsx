@@ -11,7 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ tabs }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    console.log(tabs);
+    // console.log(tabs);
   }, []);
   return (
     <>
