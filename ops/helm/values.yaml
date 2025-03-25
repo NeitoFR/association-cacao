@@ -53,6 +53,7 @@ deployments:
       JWT_SECRET:
       # CORS_URL is a space separeted list of allowed origins
       CORS_URL:
+      ALLOWED_HOSTS:
 
 # imagesConfiguration allow to configure container image URLs for the console.
 # Since all 3 images used by the console are shipped synchronously.

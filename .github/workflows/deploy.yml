@@ -42,6 +42,7 @@ jobs:
                 DB_PASSWORD: "${{ secrets.DB_PASSWORD }}"
                 JWT_SECRET: "${{ secrets.JWT_SECRET }}"
                 CORS_URL: "${{ vars.CORS_URL }}"
+                ALLOWED_HOSTS: "${{ vars.ALLOWED_HOSTS }}"
             front:
               config:
                 PUBLIC_STRAPI_URL: "${{ vars.PUBLIC_STRAPI_URL }}"
