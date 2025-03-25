@@ -6,7 +6,6 @@ export default {
     extend: {
       fontFamily: {
         glacial: ["Glacial Indifference", "sans-serif"],
-        dmDisplay: ["DM Serif Display", "serif"],
       },
       colors: {
         primary: "var(--primary-color)",
