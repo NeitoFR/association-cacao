@@ -1,73 +1,102 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./PhotoSweeper.module.css";
 import type { CatPhoto } from "../../interfaces/Cat";
+
 interface PhotoSweeperProps {
   photos: CatPhoto[];
   className: string;
 }
+
 const PhotoSweeper = (props: PhotoSweeperProps) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  // console.log("photos", props.photos);
+  const totalPhotos = props.photos.length;
 
   const handlePreviousClick = () => {
     if (currentPhoto > 0) {
-      // console.log("current : " + currentPhoto);
       setCurrentPhoto(currentPhoto - 1);
     } else {
-      console.log("Already at first photo");
+      // Loop to the last photo when at the beginning
+      setCurrentPhoto(totalPhotos - 1);
     }
   };
 
   const handleNextClick = () => {
-    if (currentPhoto < props.photos.length - 1) {
-      console.log("current : " + currentPhoto);
+    if (currentPhoto < totalPhotos - 1) {
       setCurrentPhoto(currentPhoto + 1);
     } else {
-      console.log("Already at last photo");
+      // Loop to the first photo when at the end
+      setCurrentPhoto(0);
     }
   };
 
-  const displayNavigationButton = (direction: string) => {
-    if (props.photos.length === 1) {
-      return "";
-    }
-    if (direction === "previous" && currentPhoto === 0) {
-      return "";
-    }
-    if (direction === "next" && currentPhoto === props.photos.length - 1) {
-      return "";
-    }
-    const handleClick =
-      direction === "previous" ? handlePreviousClick : handleNextClick;
-    const style = direction === "previous" ? styles.previous : styles.next;
-    const position = direction === "previous" ? "left-0" : "right-0";
-    const justifyContent =
-      direction === "previous"
-        ? "items-center pl-4"
-        : "justify-end items-center pr-4";
-    const symbol = direction === "previous" ? "<" : ">";
+  const handleThumbnailClick = (index: number) => {
+    setCurrentPhoto(index);
+  };
 
+  const renderNavigationButton = (direction: "previous" | "next") => {
+    if (totalPhotos <= 1) return null;
+
+    const isLeft = direction === "previous";
+    const handleClick = isLeft ? handlePreviousClick : handleNextClick;
+    const buttonStyle = isLeft ? styles.previous : styles.next;
+    const position = isLeft ? "left-4" : "right-4";
+    
     return (
-      <div
-        className={`${style} absolute w-1/2 cursor-pointer ${position} top-0 flex h-full ${justifyContent} bg-orange-400 text-white opacity-0`}
+      <button
+        className={`${buttonStyle} absolute top-1/2 -translate-y-1/2 ${position} z-10 
+                   flex items-center justify-center w-10 h-10 rounded-full bg-black/50 
+                   text-white text-xl font-bold transition-all duration-300 hover:bg-black/70`}
         onClick={handleClick}
+        aria-label={isLeft ? "Photo précédente" : "Photo suivante"}
       >
-        {symbol}
-      </div>
+        {isLeft ? "←" : "→"}
+      </button>
     );
   };
 
   return (
-    <div className={"relative overflow-hidden " + props.className}>
-      {displayNavigationButton("previous")}
-      <img
-        src={
-          import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto]?.url
-        }
-        alt={props.photos[currentPhoto]?.alt || "Photo de chat"}
-        className="h-full w-full object-cover object-center"
-      />
-      {displayNavigationButton("next")}
+    <div className={`relative ${props.className}`}>
+      {/* Main Image */}
+      <div className="relative overflow-hidden rounded-xl h-full">
+        <img
+          src={import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto]?.url}
+          alt={props.photos[currentPhoto]?.alt || "Photo de chat"}
+          className="h-full w-full object-cover object-center transition-opacity duration-300"
+        />
+        
+        {/* Navigation Buttons */}
+        {renderNavigationButton("previous")}
+        {renderNavigationButton("next")}
+        
+        {/* Photo Counter */}
+        {totalPhotos > 1 && (
+          <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
+            {currentPhoto + 1} / {totalPhotos}
+          </div>
+        )}
+      </div>
+      
+      {/* Thumbnails */}
+      {totalPhotos > 1 && (
+        <div className="flex justify-center mt-3 gap-2 overflow-x-auto pb-2">
+          {props.photos.map((photo, index) => (
+            <div
+              key={index}
+              className={`w-16 h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-200 
+                        ${currentPhoto === index 
+                          ? "border-2 border-catCardBorder scale-105" 
+                          : "border border-gray-300 opacity-70 hover:opacity-100"}`}
+              onClick={() => handleThumbnailClick(index)}
+            >
+              <img
+                src={import.meta.env.PUBLIC_STRAPI_URL + photo.url}
+                alt={`Miniature ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
