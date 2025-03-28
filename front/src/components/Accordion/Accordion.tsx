@@ -7,11 +7,11 @@ interface AccordionProps {
 }
 
 const Accordion: React.FC<AccordionProps> = ({ title, content, className }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className={`rounded-xl bg-white p-5 ${className}`}>
-      <div 
+    <div className={`rounded-xl bg-white p-5 flex flex-col ${className}`}>
+      <div
         className="flex justify-between items-center cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -28,16 +28,22 @@ const Accordion: React.FC<AccordionProps> = ({ title, content, className }) => {
           />
         </div>
       </div>
-      
+
       <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isExpanded 
-            ? "max-h-[500px] opacity-100 mt-4 pt-4 border-t border-gray-200" 
-            : "max-h-0 opacity-0 mt-0 pt-0 md:max-h-[500px] md:opacity-100 md:mt-4 md:pt-4 md:border-t md:border-gray-200"
+        className={`transition-all duration-300 ease-in-out ${
+          isExpanded
+            ? "h-auto opacity-100 mt-4 pt-4 border-t border-gray-200"
+            : "h-0 opacity-0 mt-0 pt-0"
         }`}
       >
-        <div className="prose max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: content || "Pas d'informations disponibles" }}></div>
+        <div className={`overflow-hidden ${isExpanded ? "" : "h-0"}`}>
+          <div className="prose max-w-none">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content || "Pas d'informations disponibles",
+              }}
+            ></div>
+          </div>
         </div>
       </div>
     </div>
