@@ -33,41 +33,36 @@ const PhotoSweeper = (props: PhotoSweeperProps) => {
     setCurrentPhoto(index);
   };
 
-  const renderNavigationButton = (direction: "previous" | "next") => {
-    if (totalPhotos <= 1) return null;
-
-    const isLeft = direction === "previous";
-    const handleClick = isLeft ? handlePreviousClick : handleNextClick;
-    const buttonStyle = isLeft ? styles.previous : styles.next;
-    const position = isLeft ? "left-4" : "right-4";
-    
-    return (
-      <button
-        className={`${buttonStyle} absolute top-1/2 -translate-y-1/2 ${position} z-10 
-                   flex items-center justify-center w-10 h-10 rounded-full bg-black/50 
-                   text-white text-xl font-bold transition-all duration-300 hover:bg-black/70`}
-        onClick={handleClick}
-        aria-label={isLeft ? "Photo précédente" : "Photo suivante"}
-      >
-        {isLeft ? "←" : "→"}
-      </button>
-    );
-  };
-
   return (
-    <div className={`relative ${props.className}`}>
-      {/* Main Image */}
-      <div className="relative overflow-hidden rounded-xl h-full">
+    <div className={`relative flex flex-col ${props.className}`}>
+      {/* Main Image Container */}
+      <div className="relative overflow-hidden rounded-xl flex-1 min-h-[300px]">
         <img
-          src={import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto]?.url}
+          src={
+            import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto]?.url
+          }
           alt={props.photos[currentPhoto]?.alt || "Photo de chat"}
           className="h-full w-full object-cover object-center transition-opacity duration-300"
         />
-        
-        {/* Navigation Buttons */}
-        {renderNavigationButton("previous")}
-        {renderNavigationButton("next")}
-        
+
+        {/* Navigation Areas */}
+        {totalPhotos > 1 && (
+          <>
+            {/* Left Navigation Area */}
+            <button
+              className="absolute left-0 top-0 w-1/2 h-full cursor-pointer bg-transparent hover:bg-gradient-to-r hover:from-black/30 hover:to-transparent transition-all duration-300"
+              onClick={handlePreviousClick}
+              aria-label="Photo précédente"
+            />
+            {/* Right Navigation Area */}
+            <button
+              className="absolute right-0 top-0 w-1/2 h-full cursor-pointer bg-transparent hover:bg-gradient-to-l hover:from-black/30 hover:to-transparent transition-all duration-300"
+              onClick={handleNextClick}
+              aria-label="Photo suivante"
+            />
+          </>
+        )}
+
         {/* Photo Counter */}
         {totalPhotos > 1 && (
           <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
@@ -75,17 +70,19 @@ const PhotoSweeper = (props: PhotoSweeperProps) => {
           </div>
         )}
       </div>
-      
-      {/* Thumbnails */}
+
+      {/* Thumbnails Container */}
       {totalPhotos > 1 && (
-        <div className="flex justify-center mt-3 gap-2 overflow-x-auto pb-2">
+        <div className="flex justify-center mt-3 gap-2 overflow-x-auto pb-2 h-[80px]">
           {props.photos.map((photo, index) => (
             <div
               key={index}
-              className={`w-16 h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-200 
-                        ${currentPhoto === index 
-                          ? "border-2 border-catCardBorder scale-105" 
-                          : "border border-gray-300 opacity-70 hover:opacity-100"}`}
+              className={`w-16 h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-200 flex-shrink-0
+                        ${
+                          currentPhoto === index
+                            ? "border-2 border-catCardBorder scale-105"
+                            : "border border-gray-300 opacity-70 hover:opacity-100"
+                        }`}
               onClick={() => handleThumbnailClick(index)}
             >
               <img
