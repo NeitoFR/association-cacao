@@ -35,14 +35,14 @@ const PhotoSweeper = (props: PhotoSweeperProps) => {
 
   return (
     <div className={`relative flex flex-col ${props.className}`}>
-      {/* Main Image Container */}
-      <div className="relative overflow-hidden rounded-xl flex-1 min-h-[300px]">
+      {/* Main Image Container with fixed height, no background or border */}
+      <div className="relative w-full h-[220px] flex items-center justify-center rounded-xl overflow-hidden">
         <img
           src={
             import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto]?.url
           }
           alt={props.photos[currentPhoto]?.alt || "Photo de chat"}
-          className="h-full w-full object-cover object-center transition-opacity duration-300"
+          className="w-full h-full object-cover object-center transition-opacity duration-300"
         />
 
         {/* Navigation Areas */}
@@ -71,13 +71,13 @@ const PhotoSweeper = (props: PhotoSweeperProps) => {
         )}
       </div>
 
-      {/* Thumbnails Container */}
+      {/* Thumbnails Container with fixed size, no background or border */}
       {totalPhotos > 1 && (
-        <div className="flex justify-center mt-3 gap-2 overflow-x-auto pb-2 h-[80px]">
+        <div className="flex justify-center mt-3 gap-2 pb-2 h-16 w-full flex-wrap overflow-y-hidden">
           {props.photos.map((photo, index) => (
             <div
               key={index}
-              className={`w-16 h-16 rounded-md overflow-hidden cursor-pointer transition-all duration-200 flex-shrink-0
+              className={`h-16 w-16 rounded-md overflow-hidden cursor-pointer transition-all duration-200 flex-shrink-0 flex items-center justify-center
                         ${
                           currentPhoto === index
                             ? "border-2 border-catCardBorder scale-105"
@@ -88,7 +88,7 @@ const PhotoSweeper = (props: PhotoSweeperProps) => {
               <img
                 src={import.meta.env.PUBLIC_STRAPI_URL + photo.url}
                 alt={`Miniature ${index + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
           ))}

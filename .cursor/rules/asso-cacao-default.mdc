@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+This is a web application to manage a stray cat association.
+The application is hosted on a homelab server, its an Ubuntu server with a k3s cluster installed.
+cert-manager is used to manage SSL certificates.
+nginx is used as a reverse proxy to route traffic to the frontend and backend applications.
+The tech stack includes:
+- Frontend: Astro 5.5, Tailwind 3 (do not generate Tailwind 4 code, only version 3), React 18 and TypeScript.. 
+- Backend: Strapi 5.11, url of the strapi application is https://dev.strapi.neitosden.fr

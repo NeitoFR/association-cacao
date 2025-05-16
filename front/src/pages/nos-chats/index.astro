@@ -4,19 +4,14 @@ import type { Cat } from "../../interfaces/Cat";
 import type { ContentSection } from "../../interfaces/ContentSection";
 import Layout from "../../layouts/Layout.astro";
 import CatCard from "../../components/CatCard/CatCard.astro";
+import CatFilter from "../../components/CatFilter/CatFilter";
 import qs from "qs";
 
 const cats: Cat[] = await strapiFetch<Cat[]>({
-  endpoint: "cats", // the content type to fetch
-  wrappedByKey: "data", // the key to unwrap the response
+  endpoint: "cats",
+  wrappedByKey: "data",
   query: qs.stringify(
     {
-      // filters: {
-      //   name:
-      //     {
-      //       $eq: "Antoher"
-      //     }
-      // },
       sort: "name:asc",
       fields: ["name", "adopted", "gender", "age", "robe", "history"],
       populate: {
@@ -26,24 +21,41 @@ const cats: Cat[] = await strapiFetch<Cat[]>({
         photos: {
           fields: ["url"],
         },
-        socialSkills: "*", // fetch all fields,
+        socialSkills: "*",
         sicknesses: {
           fields: ["name", "link"],
         },
       },
     },
     {
-      encodeValuesOnly: true, // prettify URL
+      encodeValuesOnly: true,
     }
   ),
 });
 
 const article: ContentSection = await strapiFetch({
-  endpoint: "adoption-page", // the content type to fetch
-  wrappedByKey: "data", // the key to unwrap the response
+  endpoint: "adoption-page",
+  wrappedByKey: "data",
 });
 
-const pageTitle = "Nos Chats à l'adoption";
+// Get the filter preset from URL
+const url = new URL(Astro.request.url);
+const filterPreset = url.searchParams.get("filter");
+
+// Set initial filter state based on URL parameter
+const initialFilter =
+  filterPreset === "adopted"
+    ? { adopted: true }
+    : filterPreset === "available"
+      ? { adopted: false }
+      : {};
+
+const pageTitle =
+  filterPreset === "adopted"
+    ? "Nos Chats Adoptés"
+    : filterPreset === "available"
+      ? "Nos Chats à l'adoption"
+      : "Nos Chats";
 
 console.log("Bonjour");
 ---
@@ -59,9 +71,51 @@ console.log("Bonjour");
     >
       <div set:html={article.content} class="text-[22px]" />
     </div>
-    <!-- Cat card browser -->
-    <div class="flex flex-wrap justify-center gap-16">
-      {cats.map((cat) => <CatCard cat={cat} />)}
+
+    <!-- Filter and Results Container -->
+    <div class="w-full px-4">
+      <CatFilter client:load cats={cats} initialFilter={initialFilter} />
+
+      <!-- Results Count -->
+      <div id="results-count" class="text-center mb-4 text-gray-600">
+        {cats.length} chats trouvés
+      </div>
+
+      <!-- Cat card browser -->
+      <div id="cats-container" class="flex flex-wrap justify-center gap-16">
+        {cats.map((cat) => <CatCard cat={cat} />)}
+      </div>
     </div>
   </div>
 </Layout>
+
+<script>
+  // Client-side script to handle filter updates
+  document.addEventListener("DOMContentLoaded", () => {
+    const catsContainer = document.getElementById("cats-container");
+    const resultsCount = document.getElementById("results-count");
+    const originalCats = Array.from(catsContainer?.children || []);
+
+    // Listen for custom event from CatFilter component
+    window.addEventListener("filterChange", ((event: CustomEvent) => {
+      const filteredCats = event.detail as Array<{ documentId: string }>;
+
+      // Update results count
+      if (resultsCount) {
+        resultsCount.textContent = `${filteredCats.length} chats trouvés`;
+      }
+
+      // Update visible cats
+      if (catsContainer) {
+        // Instead of manipulating innerHTML, we'll toggle visibility
+        originalCats.forEach((card) => {
+          const catId = card.getAttribute("data-catid");
+          const shouldShow = filteredCats.some(
+            (cat) => cat.documentId === catId
+          );
+          (card as HTMLElement).style.display = shouldShow ? "" : "none";
+        });
+      }
+    }) as EventListener);
+  });
+</script>
