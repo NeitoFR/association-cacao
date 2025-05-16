@@ -19,31 +19,31 @@ function getSocialIconName(str: string) {
       return "question_mark.png";
   }
 }
-
-console.log("aie aie aie aie" + socialSkills);
 ---
 
-<div class="flex flex-col space-y-1 w-1/2">
-  <div class="flex items-center ml-5">
+<div class="flex flex-col space-y-3 w-full">
+  <div class="flex items-center gap-3 p-2 bg-primary/30 rounded-lg">
     <img
       src={"/icons/" + getSocialIconName(socialSkills.isCatFriendly ?? "maybe")}
-      alt=""
-      class="size-4 mr-1"
-    /><span>Chats</span>
+      alt="Compatibilité avec les chats"
+      class="size-6"
+    />
+    <span class="font-medium">Chats</span>
   </div>
-  <div class="flex items-center ml-5">
+  <div class="flex items-center gap-3 p-2 bg-primary/30 rounded-lg">
     <img
       src={"/icons/" + getSocialIconName(socialSkills.isDogFriendly ?? "maybe")}
-      alt=""
-      class="size-4 mr-1"
-    /><span>Chiens</span>
+      alt="Compatibilité avec les chiens"
+      class="size-6"
+    />
+    <span class="font-medium">Chiens</span>
   </div>
-  <div class="flex items-center ml-5">
+  <div class="flex items-center gap-3 p-2 bg-primary/30 rounded-lg">
     <img
-      src={"/icons/" +
-        getSocialIconName(socialSkills.isChildrenFriendly ?? "maybe")}
-      alt=""
-      class="size-4 mr-1"
-    /><span>Enfants</span>
+      src={"/icons/" + getSocialIconName(socialSkills.isChildrenFriendly ?? "maybe")}
+      alt="Compatibilité avec les enfants"
+      class="size-6"
+    />
+    <span class="font-medium">Enfants</span>
   </div>
 </div>

@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAdoptionPageAdoptionPage extends Struct.SingleTypeSchema {
   collectionName: 'adoption_pages';
   info: {
+    description: '';
     displayName: 'Adoption Page';
     pluralName: 'adoption-pages';
     singularName: 'adoption-page';
@@ -389,15 +390,11 @@ export interface ApiAdoptionPageAdoptionPage extends Struct.SingleTypeSchema {
       Schema.Attribute.CustomField<
         'plugin::ckeditor.CKEditor',
         {
+          licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzQ2NTU5OTksImp0aSI6IjRkMDg5NDQ2LWZjMjgtNDM1My04NDI1LTM5ZTJiMGZmYmUyZSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCJdLCJ2YyI6Ijc0NGZiYTI5In0.-EwKSKqZDLTb0aWjX1IKCpBelmaSnd4lxkCf4krmSUkUoGpE3ndP_468SXAr7pad1279lhIST3VvDlOfTUxDEg';
           output: 'HTML';
           preset: 'rich';
         }
-      > &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

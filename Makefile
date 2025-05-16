@@ -22,14 +22,13 @@ kill: ## Stop the application
 
 .PHONY: build
 
+build: ## Build the application
+	docker-compose -f ./ops/docker-compose.yml build
 
 .PHONY: logs
 
 logs: ## Show logs for the front service
 	docker-compose -f ops/docker-compose.yml logs front --follow
-
-build: ## Build the application
-	docker-compose -f ./ops/docker-compose.yml build
 
 .PHONY: exec
 
