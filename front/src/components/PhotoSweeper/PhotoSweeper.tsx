@@ -5,11 +5,15 @@ import type { CatPhoto } from "../../interfaces/Cat";
 interface PhotoSweeperProps {
   photos: CatPhoto[];
   className: string;
+  imageFit?: "cover" | "contain";
+  imageHeightClass?: string;
 }
 
 const PhotoSweeper = (props: PhotoSweeperProps) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  const totalPhotos = props.photos.length;
+  const totalPhotos = props.photos?.length || 0;
+  const imageFit = props.imageFit || "cover";
+  const imageHeightClass = props.imageHeightClass || "h-[220px]";
 
   const handlePreviousClick = () => {
     if (currentPhoto > 0) {
@@ -33,32 +37,52 @@ const PhotoSweeper = (props: PhotoSweeperProps) => {
     setCurrentPhoto(index);
   };
 
+  // If no photos, show placeholder
+  if (!totalPhotos) {
+    return (
+      <div className={`relative flex flex-col ${props.className}`}>
+        <div
+          className={`relative w-full ${imageHeightClass} flex flex-col items-center justify-center rounded-2xl overflow-hidden bg-gray-100`}
+        >
+          <img
+            src="/icons/paw.png"
+            alt="Pas de photo"
+            className="w-16 h-16 opacity-50 mb-4"
+          />
+          <p className="text-gray-500 text-lg">Pas de photo disponible</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`relative flex flex-col ${props.className}`}>
-      {/* Main Image Container with fixed height, no background or border */}
-      <div className="relative w-full h-[220px] flex items-center justify-center rounded-xl overflow-hidden">
+      {/* Main Image Container with variable height, always rounded-2xl and overflow-hidden */}
+      <div
+        className={`relative w-full ${imageHeightClass} flex items-center justify-center rounded-2xl overflow-hidden`}
+      >
         <img
           src={
             import.meta.env.PUBLIC_STRAPI_URL + props.photos[currentPhoto]?.url
           }
           alt={props.photos[currentPhoto]?.alt || "Photo de chat"}
-          className="w-full h-full object-cover object-center transition-opacity duration-300"
+          className={`w-full h-full object-${imageFit} object-center transition-opacity duration-300`}
         />
 
-        {/* Navigation Areas */}
+        {/* Navigation Areas - always inside the rounded container */}
         {totalPhotos > 1 && (
           <>
-            {/* Left Navigation Area */}
             <button
               className="absolute left-0 top-0 w-1/2 h-full cursor-pointer bg-transparent hover:bg-gradient-to-r hover:from-black/30 hover:to-transparent transition-all duration-300"
               onClick={handlePreviousClick}
               aria-label="Photo précédente"
+              style={{ borderRadius: 0 }}
             />
-            {/* Right Navigation Area */}
             <button
               className="absolute right-0 top-0 w-1/2 h-full cursor-pointer bg-transparent hover:bg-gradient-to-l hover:from-black/30 hover:to-transparent transition-all duration-300"
               onClick={handleNextClick}
               aria-label="Photo suivante"
+              style={{ borderRadius: 0 }}
             />
           </>
         )}

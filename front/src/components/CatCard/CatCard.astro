@@ -37,15 +37,11 @@ function getSocialIconName(str: string) {
     </h1>
 
     <!-- Image -->
-    {
-      cat.photos && cat.photos[0] && (
-        <PhotoSweeper
-          photos={cat.photos}
-          className="overflow-hidden rounded-2xl"
-          client:load
-        />
-      )
-    }
+    <PhotoSweeper
+      photos={cat.photos || []}
+      className="overflow-hidden rounded-2xl"
+      client:load
+    />
 
     <!-- Details -->
     <div>
