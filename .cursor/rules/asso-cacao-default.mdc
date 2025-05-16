@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 This is a web application to manage a stray cat association.
 The application is hosted on a homelab server, its an Ubuntu server with a k3s cluster installed.
