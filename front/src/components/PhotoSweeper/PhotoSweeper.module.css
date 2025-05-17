@@ -1,18 +1,36 @@
 .previous,
 .next {
-  transition: opacity 0.2s ease-in-out;
-  user-select: none; /* Make text unselectable */
-}
-
-.previous {
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-}
-
-.next {
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  transition: all 0.3s ease;
+  user-select: none;
+  opacity: 0.8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .previous:hover,
 .next:hover {
-  opacity: 0.7;
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Add a subtle pulse animation to draw attention to navigation buttons */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Apply the animation only on initial page load */
+.previous:not(:hover),
+.next:not(:hover) {
+  animation: pulse 2s ease-in-out 1;
 }

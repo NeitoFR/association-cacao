@@ -8,7 +8,16 @@ import node from "@astrojs/node";
 export default defineConfig({
   env: {
     schema: {
-      // ...
+      "STRAPI_API_TOKEN": {
+        type: "string",
+        context: "server",
+        access: "secret"
+      },
+      "PUBLIC_STRAPI_URL": {
+        type: "string",
+        context: "server",
+        access: "public"
+      },
     },
   },
   site: "https://cacao.neitosden.fr",
